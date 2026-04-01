@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="system-ui,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#e17055"/></marker>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6c5ce7"/><stop offset="100%" stop-color="#a29bfe"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0984e3"/><stop offset="100%" stop-color="#74b9ff"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b894"/><stop offset="100%" stop-color="#55efc4"/></linearGradient>
+    <linearGradient id="gOrange" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e17055"/><stop offset="100%" stop-color="#fab1a0"/></linearGradient>
+    <linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00cec9"/><stop offset="100%" stop-color="#81ecec"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2d3436">IDE 桥接传输降级</text>
+  <text x="400" y="50" text-anchor="middle" font-size="11" fill="#636e72">WebSocket → SSE → HTTP 轮询 自动降级策略</text>
+
+  <!-- Three transport columns -->
+  <!-- WebSocket -->
+  <rect x="40" y="75" width="220" height="230" rx="14" fill="url(#gPurple)" filter="url(#shadow)"/>
+  <text x="150" y="105" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">WebSocket</text>
+  <rect x="60" y="118" width="180" height="24" rx="12" fill="rgba(255,255,255,0.2)"/>
+  <text x="150" y="135" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">全双工通信</text>
+  <text x="150" y="165" text-anchor="middle" fill="#e0e0ff" font-size="10">双向实时通信</text>
+  <text x="150" y="182" text-anchor="middle" fill="#e0e0ff" font-size="10">持久连接</text>
+  <text x="150" y="199" text-anchor="middle" fill="#e0e0ff" font-size="10">最低延迟</text>
+  <text x="150" y="216" text-anchor="middle" fill="#e0e0ff" font-size="10">原生推送通知</text>
+  <rect x="80" y="240" width="140" height="28" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="150" y="259" text-anchor="middle" fill="#fff" font-size="10">首选传输方式</text>
+  <rect x="80" y="275" width="140" height="22" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="150" y="291" text-anchor="middle" fill="#e0e0ff" font-size="9">心跳检测 30s</text>
+
+  <!-- SSE -->
+  <rect x="290" y="75" width="220" height="230" rx="14" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="400" y="105" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">SSE</text>
+  <rect x="310" y="118" width="180" height="24" rx="12" fill="rgba(255,255,255,0.2)"/>
+  <text x="400" y="135" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">单向推送</text>
+  <text x="400" y="165" text-anchor="middle" fill="#e0f0ff" font-size="10">服务端 → 客户端推送</text>
+  <text x="400" y="182" text-anchor="middle" fill="#e0f0ff" font-size="10">客户端请求用 POST</text>
+  <text x="400" y="199" text-anchor="middle" fill="#e0f0ff" font-size="10">中等延迟</text>
+  <text x="400" y="216" text-anchor="middle" fill="#e0f0ff" font-size="10">自动重连</text>
+  <rect x="330" y="240" width="140" height="28" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="400" y="259" text-anchor="middle" fill="#fff" font-size="10">降级方案 1</text>
+  <rect x="330" y="275" width="140" height="22" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="400" y="291" text-anchor="middle" fill="#e0f0ff" font-size="9">EventSource API</text>
+
+  <!-- HTTP Polling -->
+  <rect x="540" y="75" width="220" height="230" rx="14" fill="url(#gGreen)" filter="url(#shadow)"/>
+  <text x="650" y="105" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">HTTP 轮询</text>
+  <rect x="560" y="118" width="180" height="24" rx="12" fill="rgba(255,255,255,0.2)"/>
+  <text x="650" y="135" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">请求-响应</text>
+  <text x="650" y="165" text-anchor="middle" fill="#e0ffe0" font-size="10">客户端主动轮询</text>
+  <text x="650" y="182" text-anchor="middle" fill="#e0ffe0" font-size="10">最大兼容性</text>
+  <text x="650" y="199" text-anchor="middle" fill="#e0ffe0" font-size="10">延迟较高</text>
+  <text x="650" y="216" text-anchor="middle" fill="#e0ffe0" font-size="10">防火墙友好</text>
+  <rect x="580" y="240" width="140" height="28" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="650" y="259" text-anchor="middle" fill="#fff" font-size="10">降级方案 2 (兜底)</text>
+  <rect x="580" y="275" width="140" height="22" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <text x="650" y="291" text-anchor="middle" fill="#e0ffe0" font-size="9">间隔 1-5s</text>
+
+  <!-- Downgrade arrows -->
+  <line x1="260" y1="190" x2="290" y2="190" stroke="#e17055" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="275" y="183" text-anchor="middle" fill="#e17055" font-size="9" font-weight="700">降级</text>
+  <line x1="510" y1="190" x2="540" y2="190" stroke="#e17055" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="525" y="183" text-anchor="middle" fill="#e17055" font-size="9" font-weight="700">降级</text>
+
+  <!-- Auth layers section -->
+  <text x="400" y="340" text-anchor="middle" font-size="14" font-weight="bold" fill="#2d3436">认证层</text>
+
+  <rect x="40" y="360" width="170" height="60" rx="10" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="125" y="385" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">OAuth 2.0</text>
+  <text x="125" y="405" text-anchor="middle" fill="#ffe0e0" font-size="9">授权码流程</text>
+  <text x="125" y="417" text-anchor="middle" fill="#ffe0e0" font-size="9">PKCE 增强</text>
+
+  <rect x="230" y="360" width="170" height="60" rx="10" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="315" y="385" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Device Token</text>
+  <text x="315" y="405" text-anchor="middle" fill="#ffe0e0" font-size="9">设备绑定</text>
+  <text x="315" y="417" text-anchor="middle" fill="#ffe0e0" font-size="9">本地存储加密</text>
+
+  <rect x="420" y="360" width="170" height="60" rx="10" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="505" y="385" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Session Token</text>
+  <text x="505" y="405" text-anchor="middle" fill="#ffe0e0" font-size="9">会话生命周期</text>
+  <text x="505" y="417" text-anchor="middle" fill="#ffe0e0" font-size="9">自动刷新</text>
+
+  <rect x="610" y="360" width="150" height="60" rx="10" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="685" y="385" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">JWT</text>
+  <text x="685" y="405" text-anchor="middle" fill="#ffe0e0" font-size="9">无状态验证</text>
+  <text x="685" y="417" text-anchor="middle" fill="#ffe0e0" font-size="9">API 鉴权</text>
+
+  <!-- Auth flow arrow -->
+  <line x1="210" y1="450" x2="590" y2="450" stroke="#e17055" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="400" y="470" text-anchor="middle" fill="#636e72" font-size="10">认证链: OAuth → Device → Session → JWT 逐层验证</text>
+
+  <!-- Bottom note -->
+  <rect x="200" y="490" width="400" height="25" rx="6" fill="#dfe6e9"/>
+  <text x="400" y="508" text-anchor="middle" fill="#636e72" font-size="10">传输层与认证层正交 · 任意组合</text>
+</svg>

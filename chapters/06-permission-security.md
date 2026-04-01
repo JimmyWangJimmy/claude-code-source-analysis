@@ -25,31 +25,7 @@
 
 ## 6 层权限决策链
 
-```
-工具调用请求
-  │
-  ▼
-[1] Deny 规则检查 (最高优先级)
-  │ → 命中 deny → 立即拒绝
-  ▼
-[2] Allow 规则检查
-  │ → 命中 allow → 立即允许
-  ▼
-[3] Ask 规则检查
-  │ → 命中 ask → 跳到用户提示
-  ▼
-[4] Hook 执行 (executePermissionRequestHooks)
-  │ → Hook 返回 allow/deny → 采纳
-  ▼
-[5] ML 分类器自动批准 (如启用)
-  │ → 分类器判断安全 → 自动允许
-  │ → 分类器不确定 → 继续
-  ▼
-[6] 用户交互提示 / 自动拒绝
-  │ → 根据模式决定
-  ▼
-结果: allow / deny
-```
+<img src="../assets/permission-chain.svg" alt="6层权限决策链" width="100%">
 
 ---
 

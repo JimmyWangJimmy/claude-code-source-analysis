@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="system-ui,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6c5ce7"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#00b894"/></marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#e17055"/></marker>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6c5ce7"/><stop offset="100%" stop-color="#a29bfe"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0984e3"/><stop offset="100%" stop-color="#74b9ff"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b894"/><stop offset="100%" stop-color="#55efc4"/></linearGradient>
+    <linearGradient id="gOrange" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e17055"/><stop offset="100%" stop-color="#fab1a0"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2d3436">工具结果大小管理流程</text>
+
+  <!-- Start -->
+  <rect x="310" y="50" width="180" height="44" rx="22" fill="url(#gPurple)" filter="url(#shadow)"/>
+  <text x="400" y="78" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">工具返回结果</text>
+
+  <line x1="400" y1="94" x2="400" y2="130" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Diamond decision -->
+  <polygon points="400,130 520,180 400,230 280,180" fill="#fdcb6e" stroke="#f39c12" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="175" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="700">超过</text>
+  <text x="400" y="190" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="700">maxResultSizeChars?</text>
+
+  <!-- Yes path (left) -->
+  <text x="255" y="178" font-size="12" font-weight="700" fill="#e17055">Yes</text>
+  <line x1="280" y1="180" x2="180" y2="180" stroke="#e17055" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <rect x="50" y="160" width="130" height="40" rx="8" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="115" y="176" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">存到磁盘</text>
+  <text x="115" y="192" text-anchor="middle" fill="#ffe0e0" font-size="8">~/.claude/tool-results/</text>
+
+  <line x1="115" y1="200" x2="115" y2="240" stroke="#e17055" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <rect x="50" y="240" width="130" height="36" rx="8" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="115" y="264" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">哈希去重</text>
+
+  <line x1="115" y1="276" x2="115" y2="310" stroke="#e17055" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <rect x="40" y="310" width="150" height="36" rx="8" fill="url(#gOrange)" filter="url(#shadow)"/>
+  <text x="115" y="334" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">API 只收摘要</text>
+
+  <line x1="115" y1="346" x2="115" y2="380" stroke="#e17055" stroke-width="1.5"/>
+  <line x1="115" y1="380" x2="400" y2="380" stroke="#636e72" stroke-width="1.5"/>
+
+  <!-- No path (right) -->
+  <text x="535" y="178" font-size="12" font-weight="700" fill="#00b894">No</text>
+  <line x1="520" y1="180" x2="620" y2="180" stroke="#00b894" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+  <rect x="620" y="160" width="140" height="40" rx="8" fill="url(#gGreen)" filter="url(#shadow)"/>
+  <text x="690" y="185" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">直接发 API</text>
+
+  <line x1="690" y1="200" x2="690" y2="380" stroke="#00b894" stroke-width="1.5"/>
+  <line x1="690" y1="380" x2="400" y2="380" stroke="#636e72" stroke-width="1.5"/>
+
+  <!-- Merge point -->
+  <line x1="400" y1="380" x2="400" y2="410" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Budget tracking -->
+  <rect x="260" y="410" width="280" height="50" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="400" y="432" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">会话级预算追踪</text>
+  <text x="400" y="450" text-anchor="middle" fill="#e0f0ff" font-size="10">累计输出量 · 自动触发压缩</text>
+
+  <!-- Size annotation -->
+  <rect x="530" y="260" width="220" height="60" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="640" y="280" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">大小阈值</text>
+  <text x="640" y="296" text-anchor="middle" fill="#636e72" font-size="9">maxResultSizeChars = 可配置</text>
+  <text x="640" y="310" text-anchor="middle" fill="#636e72" font-size="9">超出部分截断 + 存储引用</text>
+
+  <!-- Bottom note -->
+  <text x="400" y="495" text-anchor="middle" fill="#636e72" font-size="10">大结果磁盘缓存 → 减少 API token 消耗 → 会话持续更久</text>
+</svg>

@@ -194,14 +194,6 @@ rm -rf, dd if=/dev/zero, 凭证窃取, 数据外泄
 
 ## 工具结果大小管理
 
-```
-工具返回结果
-  → 检查大小 > maxResultSizeChars ?
-    → Yes: 保存到 ~/.claude/tool-results/
-           API 只收到摘要预览 + 文件路径
-           内容哈希去重
-    → No:  直接发送给 API
-  → 会话级内容替换预算追踪
-```
+<img src="../assets/tool-result-flow.svg" alt="工具结果流程" width="100%">
 
 > **核心问题与解法:** LLM 上下文窗口有限，但工具可能返回很大的结果。解决方式是将大型结果存盘，只给模型发送摘要。

@@ -16,18 +16,7 @@ startKeychainPrefetch()
 
 ## 核心运行循环
 
-```
-用户输入
-  → main.tsx (CLI解析)
-    → QueryEngine.ts (会话管理、消息历史)
-      → query.ts (主循环: 消息规范化 → API调用 → 工具执行)
-        → services/api/claude.ts (Anthropic SDK 封装)
-          → 模型响应
-        → tools/* (工具执行)
-          → 结果返回
-      → 上下文压缩/compaction (如需要)
-    → 渲染输出 (React/Ink)
-```
+<img src="../assets/architecture-flow.svg" alt="核心运行循环" width="100%">
 
 ## 目录结构
 

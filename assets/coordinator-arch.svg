@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 580" font-family="system-ui,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6c5ce7"/></marker>
+    <marker id="arrow-up" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth"><polygon points="0 0, 10 3.5, 0 7" fill="#00b894"/></marker>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6c5ce7"/><stop offset="100%" stop-color="#a29bfe"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0984e3"/><stop offset="100%" stop-color="#74b9ff"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b894"/><stop offset="100%" stop-color="#55efc4"/></linearGradient>
+    <linearGradient id="gOrange" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e17055"/><stop offset="100%" stop-color="#fab1a0"/></linearGradient>
+    <linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00cec9"/><stop offset="100%" stop-color="#81ecec"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2d3436">Coordinator 多 Agent 架构</text>
+
+  <!-- Coordinator -->
+  <rect x="240" y="50" width="320" height="65" rx="12" fill="url(#gPurple)" filter="url(#shadow)"/>
+  <text x="400" y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Coordinator (协调者)</text>
+  <text x="400" y="100" text-anchor="middle" fill="#e0e0ff" font-size="10">任务分解 · 结果聚合 · 全量工具权限</text>
+
+  <!-- Connection lines -->
+  <line x1="300" y1="115" x2="140" y2="180" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="400" y1="115" x2="400" y2="180" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="500" y1="115" x2="660" y2="180" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Worker 1 -->
+  <rect x="40" y="180" width="200" height="100" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="140" y="205" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Worker A</text>
+  <text x="140" y="225" text-anchor="middle" fill="#e0f0ff" font-size="10">受限工具集:</text>
+  <rect x="60" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="85" y="250" text-anchor="middle" fill="#fff" font-size="9">Bash</text>
+  <rect x="118" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="143" y="250" text-anchor="middle" fill="#fff" font-size="9">Read</text>
+  <rect x="176" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="201" y="250" text-anchor="middle" fill="#fff" font-size="9">Grep</text>
+  <text x="140" y="273" text-anchor="middle" fill="#e0f0ff" font-size="9">独立上下文 · 独立 abort</text>
+
+  <!-- Worker 2 -->
+  <rect x="300" y="180" width="200" height="100" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="400" y="205" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Worker B</text>
+  <text x="400" y="225" text-anchor="middle" fill="#e0f0ff" font-size="10">受限工具集:</text>
+  <rect x="315" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="340" y="250" text-anchor="middle" fill="#fff" font-size="9">Write</text>
+  <rect x="373" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="398" y="250" text-anchor="middle" fill="#fff" font-size="9">Edit</text>
+  <rect x="431" y="235" width="55" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="458" y="250" text-anchor="middle" fill="#fff" font-size="9">Bash</text>
+  <text x="400" y="273" text-anchor="middle" fill="#e0f0ff" font-size="9">独立上下文 · 独立 abort</text>
+
+  <!-- Worker 3 -->
+  <rect x="560" y="180" width="200" height="100" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="660" y="205" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Worker C</text>
+  <text x="660" y="225" text-anchor="middle" fill="#e0f0ff" font-size="10">受限工具集:</text>
+  <rect x="585" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="610" y="250" text-anchor="middle" fill="#fff" font-size="9">Read</text>
+  <rect x="643" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="668" y="250" text-anchor="middle" fill="#fff" font-size="9">Glob</text>
+  <rect x="701" y="235" width="50" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="726" y="250" text-anchor="middle" fill="#fff" font-size="9">Grep</text>
+  <text x="660" y="273" text-anchor="middle" fill="#e0f0ff" font-size="9">独立上下文 · 独立 abort</text>
+
+  <!-- XML Notification Protocol -->
+  <rect x="180" y="310" width="440" height="45" rx="8" fill="#fdcb6e" filter="url(#shadow)"/>
+  <text x="400" y="330" text-anchor="middle" fill="#2d3436" font-size="12" font-weight="700">XML 通知协议</text>
+  <text x="400" y="347" text-anchor="middle" fill="#636e72" font-size="9">&lt;notification&gt; · &lt;task_assignment&gt; · &lt;result&gt; · &lt;status_update&gt;</text>
+
+  <!-- Return arrows -->
+  <line x1="140" y1="280" x2="140" y2="310" stroke="#00b894" stroke-width="1.5" marker-end="url(#arrow-up)"/>
+  <line x1="400" y1="280" x2="400" y2="310" stroke="#00b894" stroke-width="1.5" marker-end="url(#arrow-up)"/>
+  <line x1="660" y1="280" x2="660" y2="310" stroke="#00b894" stroke-width="1.5" marker-end="url(#arrow-up)"/>
+
+  <!-- Scratchpad -->
+  <rect x="160" y="390" width="480" height="70" rx="12" fill="url(#gTeal)" filter="url(#shadow)"/>
+  <text x="400" y="418" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Scratchpad 共享存储</text>
+  <text x="400" y="440" text-anchor="middle" fill="#e0ffff" font-size="10">Worker 之间通过文件系统交换中间结果 · 避免上下文膨胀</text>
+
+  <line x1="400" y1="355" x2="400" y2="390" stroke="#00cec9" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Side annotations -->
+  <rect x="40" y="490" width="160" height="44" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="120" y="510" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">并行执行</text>
+  <text x="120" y="525" text-anchor="middle" fill="#636e72" font-size="9">Workers 可同时运行</text>
+
+  <rect x="240" y="490" width="160" height="44" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="320" y="510" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">隔离保护</text>
+  <text x="320" y="525" text-anchor="middle" fill="#636e72" font-size="9">Worker 崩溃不影响其他</text>
+
+  <rect x="440" y="490" width="160" height="44" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="520" y="510" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">权限继承</text>
+  <text x="520" y="525" text-anchor="middle" fill="#636e72" font-size="9">Worker 继承父级权限</text>
+
+  <rect x="640" y="490" width="130" height="44" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="705" y="510" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">深度限制</text>
+  <text x="705" y="525" text-anchor="middle" fill="#636e72" font-size="9">最大嵌套 3 层</text>
+</svg>

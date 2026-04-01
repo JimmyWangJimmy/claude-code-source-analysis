@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="system-ui,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6c5ce7"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#00b894"/></marker>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6c5ce7"/><stop offset="100%" stop-color="#a29bfe"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0984e3"/><stop offset="100%" stop-color="#74b9ff"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b894"/><stop offset="100%" stop-color="#55efc4"/></linearGradient>
+    <linearGradient id="gOrange" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e17055"/><stop offset="100%" stop-color="#fab1a0"/></linearGradient>
+    <linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00cec9"/><stop offset="100%" stop-color="#81ecec"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d63031"/><stop offset="100%" stop-color="#ff7675"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+
+  <text x="400" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2d3436">Agent 生命周期</text>
+
+  <!-- try block outline -->
+  <rect x="110" y="45" width="560" height="230" rx="12" fill="none" stroke="#0984e3" stroke-width="2" stroke-dasharray="8,4"/>
+  <rect x="110" y="45" width="560" height="230" rx="12" fill="#0984e3" fill-opacity="0.04"/>
+  <rect x="115" y="40" width="50" height="20" rx="4" fill="#0984e3"/>
+  <text x="140" y="54" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">try</text>
+
+  <!-- finally block outline -->
+  <rect x="110" y="290" width="560" height="140" rx="12" fill="none" stroke="#e17055" stroke-width="2" stroke-dasharray="8,4"/>
+  <rect x="110" y="290" width="560" height="140" rx="12" fill="#e17055" fill-opacity="0.04"/>
+  <rect x="115" y="285" width="70" height="20" rx="4" fill="#e17055"/>
+  <text x="150" y="299" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">finally</text>
+
+  <!-- Step 1: Create -->
+  <rect x="30" y="70" width="100" height="44" rx="22" fill="url(#gPurple)" filter="url(#shadow)"/>
+  <text x="80" y="97" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">创建</text>
+  <line x1="130" y1="92" x2="160" y2="92" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: Init Context -->
+  <rect x="160" y="70" width="120" height="44" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="220" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">初始化上下文</text>
+  <text x="220" y="105" text-anchor="middle" fill="#e0f0ff" font-size="8">System Prompt</text>
+  <line x1="280" y1="92" x2="310" y2="92" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: Register Task -->
+  <rect x="310" y="70" width="110" height="44" rx="10" fill="url(#gBlue)" filter="url(#shadow)"/>
+  <text x="365" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">注册任务</text>
+  <text x="365" y="105" text-anchor="middle" fill="#e0f0ff" font-size="8">TaskQueue</text>
+  <line x1="420" y1="92" x2="450" y2="92" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Query Loop -->
+  <rect x="450" y="60" width="180" height="64" rx="10" fill="url(#gGreen)" filter="url(#shadow)"/>
+  <text x="540" y="82" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">执行 query 循环</text>
+  <text x="540" y="100" text-anchor="middle" fill="#e0ffe0" font-size="9">API 调用 → 工具执行</text>
+  <text x="540" y="114" text-anchor="middle" fill="#e0ffe0" font-size="9">循环直到任务完成</text>
+  <!-- Loop arrow -->
+  <path d="M 630 85 Q 660 85 660 60 Q 660 50 540 50 Q 460 50 460 68" fill="none" stroke="#00b894" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 5: Produce Result -->
+  <line x1="540" y1="124" x2="540" y2="155" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="460" y="155" width="160" height="44" rx="10" fill="url(#gTeal)" filter="url(#shadow)"/>
+  <text x="540" y="175" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">产出结果</text>
+  <text x="540" y="192" text-anchor="middle" fill="#e0ffff" font-size="9">聚合工具输出</text>
+
+  <!-- Step 6: Notify Parent -->
+  <line x1="540" y1="199" x2="540" y2="225" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="440" y="225" width="200" height="44" rx="10" fill="url(#gTeal)" filter="url(#shadow)"/>
+  <text x="540" y="245" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">通知父 Agent</text>
+  <text x="540" y="262" text-anchor="middle" fill="#e0ffff" font-size="9">XML 结果上报</text>
+
+  <!-- Arrow to finally -->
+  <line x1="400" y1="275" x2="400" y2="310" stroke="#e17055" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 7: Cleanup -->
+  <rect x="160" y="315" width="480" height="50" rx="10" fill="url(#gRed)" filter="url(#shadow)"/>
+  <text x="400" y="338" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">清理资源</text>
+  <text x="400" y="357" text-anchor="middle" fill="#ffe0e0" font-size="10">无论成功或失败，始终执行</text>
+
+  <!-- Cleanup items -->
+  <g transform="translate(140,380)">
+    <rect width="90" height="30" rx="6" fill="#dfe6e9" filter="url(#shadow)"/>
+    <text x="45" y="20" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">MCP</text>
+  </g>
+  <g transform="translate(245,380)">
+    <rect width="90" height="30" rx="6" fill="#dfe6e9" filter="url(#shadow)"/>
+    <text x="45" y="20" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">Hooks</text>
+  </g>
+  <g transform="translate(350,380)">
+    <rect width="100" height="30" rx="6" fill="#dfe6e9" filter="url(#shadow)"/>
+    <text x="50" y="20" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">FileState</text>
+  </g>
+  <g transform="translate(465,380)">
+    <rect width="100" height="30" rx="6" fill="#dfe6e9" filter="url(#shadow)"/>
+    <text x="50" y="20" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">BashTasks</text>
+  </g>
+  <g transform="translate(580,380)">
+    <rect width="90" height="30" rx="6" fill="#dfe6e9" filter="url(#shadow)"/>
+    <text x="45" y="20" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">Perfetto</text>
+  </g>
+
+  <!-- Error handling note -->
+  <rect x="130" y="430" width="520" height="35" rx="8" fill="#ffeaa7" filter="url(#shadow)"/>
+  <text x="390" y="452" text-anchor="middle" fill="#2d3436" font-size="10" font-weight="600">异常处理: AbortSignal 取消 · 超时保护 · 错误上报到父 Agent · 资源泄漏兜底检查</text>
+</svg>
