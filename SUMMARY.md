@@ -1,6 +1,7 @@
 # 目录
 
-* [前言](README.md)
+* [拆解 Claude Code](README.md)
+* [导读](chapters/00-guide.md)
 
 ## 先上手
 
