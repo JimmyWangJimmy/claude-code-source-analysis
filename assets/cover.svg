@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0c29"/>
+      <stop offset="50%" stop-color="#302b63"/>
+      <stop offset="100%" stop-color="#24243e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6c5ce7"/>
+      <stop offset="100%" stop-color="#a29bfe"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f9ca24"/>
+      <stop offset="100%" stop-color="#f0932b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ds"><feDropShadow dx="2" dy="3" stdDeviation="4" flood-opacity="0.3"/></filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- Decorative grid lines -->
+  <g opacity="0.06" stroke="#a29bfe" stroke-width="0.5">
+    <line x1="0" y1="80" x2="800" y2="80"/>
+    <line x1="0" y1="160" x2="800" y2="160"/>
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="320" x2="800" y2="320"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="160" y1="0" x2="160" y2="500"/>
+    <line x1="320" y1="0" x2="320" y2="500"/>
+    <line x1="480" y1="0" x2="480" y2="500"/>
+    <line x1="640" y1="0" x2="640" y2="500"/>
+  </g>
+
+  <!-- Decorative code fragments (background) -->
+  <g opacity="0.08" fill="#a29bfe" font-family="'JetBrains Mono','Fira Code',monospace" font-size="11">
+    <text x="30" y="60">export async function* runAgent({ agentDefinition, promptMessages }) {</text>
+    <text x="50" y="100">const module = feature('COORDINATOR_MODE') ? require('./coordinator') : null</text>
+    <text x="20" y="380">systemPromptSection('key', () =&gt; computeExpensiveContent())</text>
+    <text x="40" y="420">if (allowedTools) { // 父的批准不会泄漏 }</text>
+    <text x="60" y="460">SYSTEM_PROMPT_DYNAMIC_BOUNDARY</text>
+    <text x="520" y="140">StreamingToolExecutor</text>
+    <text x="480" y="180">normalizeMessagesForAPI()</text>
+  </g>
+
+  <!-- Accent line top -->
+  <rect x="80" y="110" width="120" height="4" rx="2" fill="url(#gold)"/>
+
+  <!-- Main title -->
+  <text x="80" y="180" font-size="52" font-weight="800" fill="#ffffff" filter="url(#glow)">拆解 Claude Code</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="225" font-size="18" fill="#a29bfe" font-weight="400">从 51 万行泄露源码中提炼 AI Agent 设计方法与提效配置</text>
+
+  <!-- Accent line bottom -->
+  <rect x="80" y="245" width="640" height="1" fill="#a29bfe" opacity="0.3"/>
+
+  <!-- Stats row -->
+  <g transform="translate(80, 280)">
+    <g>
+      <text font-size="28" font-weight="700" fill="#f9ca24">1,902</text>
+      <text y="22" font-size="11" fill="#636e72">源文件</text>
+    </g>
+    <g transform="translate(140,0)">
+      <text font-size="28" font-weight="700" fill="#f9ca24">512K+</text>
+      <text y="22" font-size="11" fill="#636e72">代码行数</text>
+    </g>
+    <g transform="translate(290,0)">
+      <text font-size="28" font-weight="700" fill="#f9ca24">14</text>
+      <text y="22" font-size="11" fill="#636e72">章节</text>
+    </g>
+    <g transform="translate(370,0)">
+      <text font-size="28" font-weight="700" fill="#f9ca24">13</text>
+      <text y="22" font-size="11" fill="#636e72">架构图</text>
+    </g>
+    <g transform="translate(460,0)">
+      <text font-size="28" font-weight="700" fill="#f9ca24">29</text>
+      <text y="22" font-size="11" fill="#636e72">行动建议</text>
+    </g>
+  </g>
+
+  <!-- Chapter pills -->
+  <g transform="translate(80, 340)">
+    <rect width="96" height="28" rx="14" fill="#6c5ce7" opacity="0.7"/>
+    <text x="48" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">Prompt 工程</text>
+
+    <rect x="106" width="80" height="28" rx="14" fill="#00b894" opacity="0.7"/>
+    <text x="146" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">工具系统</text>
+
+    <rect x="196" width="80" height="28" rx="14" fill="#e17055" opacity="0.7"/>
+    <text x="236" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">安全防御</text>
+
+    <rect x="286" width="96" height="28" rx="14" fill="#0984e3" opacity="0.7"/>
+    <text x="334" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">多 Agent 协作</text>
+
+    <rect x="392" width="80" height="28" rx="14" fill="#fdcb6e" opacity="0.7"/>
+    <text x="432" y="19" text-anchor="middle" font-size="10" fill="#2d3436" font-weight="600">记忆系统</text>
+
+    <rect x="482" width="80" height="28" rx="14" fill="#fd79a8" opacity="0.7"/>
+    <text x="522" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">隐藏功能</text>
+
+    <rect x="572" width="96" height="28" rx="14" fill="#636e72" opacity="0.7"/>
+    <text x="620" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="600">一键配置集</text>
+  </g>
+
+  <!-- GitHub URL -->
+  <g transform="translate(80, 410)">
+    <rect width="460" height="32" rx="16" fill="#ffffff" opacity="0.1"/>
+    <text x="16" y="21" font-size="12" fill="#a29bfe" font-family="'JetBrains Mono',monospace">github.com/JimmyWangJimmy/claude-code-source-analysis</text>
+  </g>
+
+  <!-- Bottom right badge -->
+  <g transform="translate(580, 440)">
+    <text font-size="11" fill="#636e72">基于 2026-03-31 npm source map 泄露</text>
+    <text y="16" font-size="11" fill="#636e72">教育与安全研究用途</text>
+  </g>
+</svg>
