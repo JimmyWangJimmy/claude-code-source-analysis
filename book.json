@@ -1,15 +1,16 @@
 {
   "title": "拆解 Claude Code",
-  "description": "基于 2026-03-31 npm source map 泄露的 Claude Code TypeScript 源码快照，完整剖析 Anthropic 旗舰 AI 编码 Agent 的架构、安全、多智能体与隐藏功能。",
+  "description": "从51万行泄露源码中提炼架构、安全、多Agent设计逻辑的中文实战手册",
   "author": "Source Leak Analysis",
   "language": "zh-hans",
   "plugins": [
     "-lunr",
-    "-sharing"
+    "-sharing",
+    "copy-code-button"
   ],
   "pluginsConfig": {
     "theme-default": {
-      "showLevel": true
+      "showLevel": false
     },
     "fontsettings": {
       "theme": "white",

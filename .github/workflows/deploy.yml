@@ -24,8 +24,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install HonKit
-        run: npm install honkit
+      - name: Install dependencies
+        run: npm install
 
       - name: Build book
         run: npx honkit build . ./build

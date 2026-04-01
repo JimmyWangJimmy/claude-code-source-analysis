@@ -2,13 +2,15 @@
 
 > **基于 2026-03-31 通过 npm source map 泄露的 Claude Code TypeScript 源码快照**
 
+**想直接上手？** 跳到 [附录：一键复制配置集](chapters/14-copy-paste-configs.md) — settings.json / CLAUDE.md / 环境变量 / Hook 配方 / 初始化脚本，复制粘贴立刻生效。
+
 ---
 
 ## 这本书讲什么
 
 2026 年 3 月 31 日，Claude Code 的 npm 包中暴露了 `.map` source map 文件，指向 Anthropic R2 存储桶中的未混淆 TypeScript 源码。1,902 个文件、512,000 行代码——一个生产级 AI 编码 Agent 的完整实现。
 
-这本书把这些源码拆开看了一遍，提炼出你能用的东西。
+这本书把源码拆开，提炼出能直接用的东西。
 
 <img src="assets/book-overview.svg" alt="全书结构概览" width="100%">
 
@@ -30,7 +32,7 @@
 
 <img src="assets/architecture-flow.svg" alt="核心运行循环" width="100%">
 
-| 章节 | 内容 | 你能学到什么 |
+| 章节 | 内容 | 能学到什么 |
 |------|------|-------------|
 | [02 - 技术栈总览](chapters/02-overview.md) | Bun / React+Ink / Commander.js / Zod / ripgrep 的选型理由 | 为什么选这些技术 |
 | [03 - 整体架构](chapters/03-architecture.md) | main.tsx → QueryEngine → query.ts → API → Tools 的调用链 | 请求从头到尾怎么走 |
@@ -42,7 +44,7 @@
 
 <img src="assets/permission-chain.svg" alt="6层权限决策链" width="100%">
 
-| 章节 | 内容 | 你能学到什么 |
+| 章节 | 内容 | 能学到什么 |
 |------|------|-------------|
 | [05 - 工具系统](chapters/05-tool-system.md) | BashTool 161KB 实现、AgentTool 235KB、工具结果大小管理 | 怎么设计 Agent 工具 |
 | [06 - 权限与安全系统](chapters/06-permission-security.md) | 6 层决策链、Bash AST 分析、ML 分类器、权限疲劳检测 | 怎么做 Agent 安全 |
@@ -53,7 +55,7 @@
 
 <img src="assets/multi-agent-modes.svg" alt="四种Agent模式" width="100%">
 
-| 章节 | 内容 | 你能学到什么 |
+| 章节 | 内容 | 能学到什么 |
 |------|------|-------------|
 | [07 - 多智能体协作](chapters/07-multi-agent.md) | Subagent / Fork / Teammate / Coordinator 四种模式 | 多 Agent 怎么协作 |
 | [08 - 记忆系统与上下文管理](chapters/08-memory-context.md) | MEMORY.md、压缩策略、Token 预算、Git 状态快照 | 怎么管理 Agent 记忆 |
@@ -62,7 +64,7 @@
 
 IDE 桥接的双向通信、40+ Feature Flags 揭示的未发布功能。
 
-| 章节 | 内容 | 你能学到什么 |
+| 章节 | 内容 | 能学到什么 |
 |------|------|-------------|
 | [09 - IDE 桥接与远程控制](chapters/09-bridge-ide.md) | WebSocket/SSE/轮询降级、4 层认证、32 并发会话 | IDE 集成怎么做 |
 | [10 - 隐藏功能与未发布特性](chapters/10-hidden-features.md) | PROACTIVE / VOICE / ULTRATHINK / BUDDY 等 40+ flags | 未来方向是什么 |
@@ -73,7 +75,7 @@ IDE 桥接的双向通信、40+ Feature Flags 揭示的未发布功能。
 
 <img src="assets/fork-cache.svg" alt="Fork Cache共享" width="100%">
 
-| 章节 | 内容 | 你能学到什么 |
+| 章节 | 内容 | 能学到什么 |
 |------|------|-------------|
 | [11 - 关键设计模式](chapters/11-design-patterns.md) | 15 个模式：Feature Flag 死代码消除、Fork Cache 共享、流式工具执行 | 工程上怎么做 |
 | [12 - 多 Agent 设计启示录](chapters/12-multi-agent-design-lessons.md) | 14 条设计启示 + 隔离矩阵 + 防递归 + 检查清单 | 构建多 Agent 系统的方法论 |
