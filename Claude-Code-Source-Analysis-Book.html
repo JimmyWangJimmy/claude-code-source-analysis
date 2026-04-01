@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code 源码深度分析</title>
+<style>
+:root{--accent:#6c5ce7;--accent2:#00b894;--accent3:#e17055;--fg:#1a1a2e;--muted:#636e72;--border:#dfe6e9;--code-bg:#f8f9fa;--stripe:#f7f8fc}
+@page{size:A4;margin:16mm 14mm 16mm 14mm}
+@media print{
+  body{font-size:9pt}
+  .cover{page-break-after:always;min-height:100vh}
+  .toc{page-break-after:always}
+  h2.ch{page-break-before:always}
+  h2.ch:first-of-type{page-break-before:avoid}
+  pre{font-size:7.5pt;padding:8px 10px}
+  table{font-size:8pt}
+  .no-print{display:none!important}
+  .insight,.warning{padding:8px 12px}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--fg);line-height:1.7;max-width:880px;margin:0 auto;padding:36px 28px}
+.cover{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:92vh;text-align:center;padding:60px 20px}
+.cover h1{font-size:2.5em;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.cover .sub{font-size:1.1em;color:var(--muted);max-width:540px;margin-bottom:36px}
+.cover-meta{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.cover-meta .m{display:flex;flex-direction:column;align-items:center;padding:10px 18px;border-radius:10px;background:var(--code-bg)}
+.m .v{font-size:1.4em;font-weight:700;color:var(--accent)}
+.m .l{font-size:.75em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.toc{padding:24px 0}
+.toc h2{font-size:1.5em;color:var(--accent);margin-bottom:16px;border:none}
+.toc ol{list-style:none;counter-reset:tc;padding:0}
+.toc li{counter-increment:tc;padding:7px 12px;display:flex;align-items:baseline;gap:10px;border-left:3px solid transparent}
+.toc li:hover{border-left-color:var(--accent);background:var(--stripe)}
+.toc li::before{content:counter(tc,decimal-leading-zero);font-weight:700;color:var(--accent);font-size:.85em;min-width:24px}
+.toc .t{font-weight:600;font-size:.98em}
+.toc .d{color:var(--muted);font-size:.82em;margin-left:auto}
+.part-title{font-size:1.1em;font-weight:700;color:var(--accent3);margin:16px 0 4px;padding:0;border:none}
+h2.ch{font-size:1.5em;font-weight:800;margin:40px 0 6px;padding-bottom:8px;border-bottom:3px solid var(--accent)}
+h2.ch .n{display:inline-block;background:var(--accent);color:#fff;width:32px;height:32px;line-height:32px;text-align:center;border-radius:7px;font-size:.65em;margin-right:8px;vertical-align:middle}
+h3{font-size:1.12em;font-weight:700;margin:22px 0 8px;color:var(--accent)}
+h4{font-size:1em;font-weight:600;margin:16px 0 6px}
+p{margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88em}
+thead th{background:var(--accent);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:.85em}
+thead th:first-child{border-radius:6px 0 0 0}
+thead th:last-child{border-radius:0 6px 0 0}
+td{padding:6px 10px;border-bottom:1px solid var(--border)}
+tbody tr:nth-child(even){background:var(--stripe)}
+code{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--code-bg);padding:1px 5px;border-radius:3px;font-size:.85em;color:var(--accent3)}
+pre{background:#2d3436;color:#dfe6e9;padding:14px 16px;border-radius:8px;overflow-x:auto;margin:10px 0;line-height:1.5;font-size:.82em}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.insight{background:linear-gradient(135deg,#f8f4ff,#f0f8ff);border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+.insight strong{color:var(--accent)}
+.warning{background:#fff8e1;border-left:4px solid #f39c12;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+.diagram{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0;font-family:"JetBrains Mono",monospace;font-size:.78em;white-space:pre;line-height:1.35;overflow-x:auto}
+ul,ol{margin:6px 0 6px 22px}
+li{margin:3px 0}
+hr{border:none;height:1px;background:var(--border);margin:24px 0}
+.tag{display:inline-block;padding:1px 8px;border-radius:16px;font-size:.72em;font-weight:600;margin:1px 2px}
+.tag-p{background:#ede7f6;color:#5e35b1}.tag-g{background:#e8f5e9;color:#2e7d32}.tag-o{background:#fff3e0;color:#e65100}.tag-b{background:#e3f2fd;color:#1565c0}.tag-r{background:#ffebee;color:#c62828}
+.footer{margin-top:48px;padding:20px 0;border-top:2px solid var(--border);text-align:center;color:var(--muted);font-size:.82em}
+.btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;padding:10px 22px;border-radius:26px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(108,92,231,.4);z-index:999}
+.btn:hover{transform:scale(1.05)}
+</style>
+</head>
+<body>
+
+<div class="btn no-print" onclick="window.print()">Ctrl+P 保存 PDF</div>
+
+<!-- ====== 封面 ====== -->
+<div class="cover">
+<div style="font-size:64px;margin-bottom:20px">&#128270;</div>
+<h1>Claude Code 源码<br>深度分析</h1>
+<p class="sub">基于 2026-03-31 npm source map 泄露的完整 TypeScript 源码快照，系统剖析 Anthropic 旗舰 AI 编码 Agent 的架构、安全、多智能体与隐藏功能。</p>
+<div class="cover-meta">
+<div class="m"><span class="v">1,902</span><span class="l">源文件</span></div>
+<div class="m"><span class="v">512K+</span><span class="l">代码行数</span></div>
+<div class="m"><span class="v">13</span><span class="l">分析章节</span></div>
+<div class="m"><span class="v">40+</span><span class="l">Feature Flags</span></div>
+</div>
+<p style="margin-top:36px;color:var(--muted);font-size:.82em">分析日期: 2026-04-01 &nbsp;|&nbsp; TypeScript / Bun / React+Ink</p>
+</div>
+
+<!-- ====== 目录 ====== -->
+<div class="toc">
+<h2>目录</h2>
+<p class="part-title">第一部分：核心架构</p>
+<ol>
+<li><span class="t">价值定位与技术栈</span><span class="d">这份源码能带来什么</span></li>
+<li><span class="t">整体架构</span><span class="d">入口 / 目录 / QueryEngine</span></li>
+<li><span class="t">System Prompt 工程</span><span class="d">动态组装 / 7 大策略</span></li>
+</ol>
+<p class="part-title">第二部分：工具与安全</p>
+<ol start="4">
+<li><span class="t">工具系统</span><span class="d">40+ 工具设计模式</span></li>
+<li><span class="t">权限与安全系统</span><span class="d">6 层决策链 / Bash AST</span></li>
+</ol>
+<p class="part-title">第三部分：智能体与记忆</p>
+<ol start="6">
+<li><span class="t">多智能体协作</span><span class="d">4 种 Agent 模式</span></li>
+<li><span class="t">记忆系统与上下文管理</span><span class="d">持久记忆 / 压缩 / Token 预算</span></li>
+</ol>
+<p class="part-title">第四部分：集成与扩展</p>
+<ol start="8">
+<li><span class="t">IDE 桥接与远程控制</span><span class="d">VS Code / JetBrains 双向通信</span></li>
+<li><span class="t">隐藏功能与未发布特性</span><span class="d">40+ Feature Flags</span></li>
+</ol>
+<p class="part-title">第五部分：深度专题</p>
+<ol start="10">
+<li><span class="t">关键设计模式</span><span class="d">15 个工程模式</span></li>
+<li><span class="t">可行动洞察</span><span class="d">29 条实战参考</span></li>
+<li><span class="t">多 Agent 系统设计启示录</span><span class="d">14 条设计启示 + 检查清单</span></li>
+<li><span class="t">高效使用与隐藏玩法</span><span class="d">快捷键 / 环境变量 / Hook / 配置模板</span></li>
+</ol>
+</div>
+
+<!-- ====== CH01 ====== -->
+<h2 class="ch"><span class="n">01</span> 价值定位与技术栈</h2>
+
+<h3>这份源码能带来什么价值?</h3>
+<p><strong>1. 理解顶级 AI Agent 的工程架构</strong> — 完整请求链路、多智能体协作、权限安全、IDE 集成、持久化记忆</p>
+<p><strong>2. 学习 System Prompt 工程</strong> — Anthropic 精心调优的 prompt、动态组装上下文、安全与实用性的平衡</p>
+<p><strong>3. 安全研究与防御参考</strong> — 分层权限引擎、Bash AST 安全分析、危险模式检测、沙盒隔离</p>
+<p><strong>4. 产品设计灵感</strong> — 40+ 工具、60+ 命令、技能/插件架构、成本追踪</p>
+
+<h3>技术栈</h3>
+<table>
+<thead><tr><th>类别</th><th>技术</th></tr></thead>
+<tbody>
+<tr><td>运行时</td><td>Bun</td></tr>
+<tr><td>语言</td><td>TypeScript (strict)</td></tr>
+<tr><td>终端 UI</td><td>React + Ink</td></tr>
+<tr><td>CLI</td><td>Commander.js</td></tr>
+<tr><td>Schema</td><td>Zod v4</td></tr>
+<tr><td>搜索</td><td>ripgrep</td></tr>
+<tr><td>协议</td><td>MCP SDK, LSP</td></tr>
+<tr><td>API</td><td>Anthropic SDK</td></tr>
+<tr><td>遥测</td><td>OpenTelemetry + gRPC</td></tr>
+<tr><td>Feature Flags</td><td>GrowthBook</td></tr>
+<tr><td>认证</td><td>OAuth 2.0, JWT</td></tr>
+</tbody>
+</table>
+
+<!-- ====== CH02 ====== -->
+<h2 class="ch"><span class="n">02</span> 整体架构</h2>
+
+<h3>核心运行循环</h3>
+<div class="diagram">用户输入
+  → main.tsx (CLI 解析, 4683 行)
+    → QueryEngine.ts (会话管理, 1295 行)
+      → query.ts (主循环: 消息规范化 → API → 工具执行)
+        → services/api/claude.ts (Anthropic SDK)
+        → tools/* (40+ 工具)
+      → 上下文压缩 (如需要)
+    → 渲染输出 (React/Ink)</div>
+
+<h3>关键架构决策</h3>
+<table>
+<thead><tr><th>决策</th><th>原因与效果</th></tr></thead>
+<tbody>
+<tr><td><strong>Bun 运行时</strong></td><td>快启动 + 原生 TS + <code>bun:bundle</code> feature flags 死代码消除</td></tr>
+<tr><td><strong>React + Ink</strong></td><td>组件化终端 UI、声明式权限对话框、流式状态管理</td></tr>
+<tr><td><strong>懒加载</strong></td><td>OpenTelemetry/React/Analytics 按需 <code>import()</code></td></tr>
+<tr><td><strong>大结果存盘</strong></td><td>超阈值工具结果存 <code>~/.claude/tool-results/</code>，只给 API 摘要</td></tr>
+<tr><td><strong>并行预取</strong></td><td>MDM/Keychain/GrowthBook 在 import 之前并行发起</td></tr>
+</tbody>
+</table>
+
+<h3>QueryEngine.ts 核心职责</h3>
+<table>
+<thead><tr><th>职责</th><th>实现</th></tr></thead>
+<tbody>
+<tr><td>消息规范化</td><td><code>normalizeMessagesForAPI()</code> 清理 ANSI、规范化 blocks</td></tr>
+<tr><td>流式执行</td><td><code>StreamingToolExecutor</code> 并发执行多工具</td></tr>
+<tr><td>自动压缩</td><td>超 token 阈值触发 auto-compact</td></tr>
+<tr><td>重试</td><td>指数退避，区分可重试/永久错误</td></tr>
+<tr><td>会话持久化</td><td>消息历史、成本状态存盘</td></tr>
+</tbody>
+</table>
+
+<!-- ====== CH03 ====== -->
+<h2 class="ch"><span class="n">03</span> System Prompt 工程</h2>
+
+<div class="insight"><strong>这是最有价值的部分之一。</strong> Claude Code 的 system prompt 是经过大量迭代的产品工件。</div>
+
+<h3>动态 Prompt 组装</h3>
+<div class="diagram">┌────────────────────────────────┐
+│ STATIC (全局可缓存)             │
+│  身份声明 / 工具指南 / 安全规则   │
+│  代码编辑规范 / 输出风格          │
+├────────────────────────────────┤
+│ DYNAMIC (用户特定)              │
+│  日期 / Git 状态 / CLAUDE.md    │
+│  工具列表 / Feature flag 指令   │
+└────────────────────────────────┘
+分隔: SYSTEM_PROMPT_DYNAMIC_BOUNDARY
+→ API prompt caching 缓存静态部分</div>
+
+<h3>7 大核心 Prompt 策略</h3>
+<table>
+<thead><tr><th>#</th><th>策略</th><th>洞察</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>先读后改</td><td>强制模型修改前先获取当前状态，解决"幻觉式编码"</td></tr>
+<tr><td>2</td><td>反过度工程</td><td>"三行重复代码好过一个过早抽象"</td></tr>
+<tr><td>3</td><td>安全确认</td><td>一次授权 ≠ 永久授权，防止 Agent 越权</td></tr>
+<tr><td>4</td><td>不给时间估计</td><td>LLM 无法准确估时，不说比说错好</td></tr>
+<tr><td>5</td><td>安全编码</td><td>OWASP Top 10 意识提醒</td></tr>
+<tr><td>6</td><td>不暴力重试</td><td>禁止无脑重试，要求分析原因后换方法</td></tr>
+<tr><td>7</td><td>不兼容 Hack</td><td>不留 <code>_unused</code>、<code>// removed</code> 等残留</td></tr>
+</tbody>
+</table>
+
+<h3>Prompt 优先级</h3>
+<p>Override (最高) → Coordinator → Agent → Custom → Default → Append (最低)</p>
+
+<!-- ====== CH04 ====== -->
+<h2 class="ch"><span class="n">04</span> 工具系统: 40+ 工具</h2>
+
+<h3>框架: Tool&lt;Input, Output, Progress&gt;</h3>
+<p>每个工具: 输入 Schema (Zod) + 权限模型 + 执行逻辑 + UI 渲染 + 进度回调。<code>buildTool()</code> 工厂提供默认值。</p>
+
+<h3>核心工具</h3>
+<table>
+<thead><tr><th>工具</th><th>大小</th><th>关键特性</th></tr></thead>
+<tbody>
+<tr><td><strong>BashTool</strong></td><td>161KB</td><td>AST 命令拆分、沙盒、只读检测、Sed 验证、2s 后进度流</td></tr>
+<tr><td><strong>AgentTool</strong></td><td>235KB</td><td>子 Agent 生成、模型覆盖、worktree/remote 隔离、Fork cache 共享</td></tr>
+<tr><td><strong>FileReadTool</strong></td><td>40KB</td><td>PDF 页面提取、图片降采样、Jupyter 解析、设备文件阻止</td></tr>
+<tr><td><strong>FileEditTool</strong></td><td>21KB</td><td>1GiB 限制、CRLF/LF 保留、冲突检测、Git diff 撤销</td></tr>
+</tbody>
+</table>
+
+<h3>完整工具清单</h3>
+<table>
+<thead><tr><th>分类</th><th>工具</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-b">文件</span></td><td>Read, Write, Edit, Glob, Grep, NotebookEdit</td></tr>
+<tr><td><span class="tag tag-p">执行</span></td><td>Bash, Agent, Skill, REPL</td></tr>
+<tr><td><span class="tag tag-g">网络</span></td><td>WebFetch, WebSearch</td></tr>
+<tr><td><span class="tag tag-o">协议</span></td><td>MCP, LSP</td></tr>
+<tr><td><span class="tag tag-b">任务</span></td><td>TaskCreate, TaskUpdate, TaskList, TaskStop, TaskOutput</td></tr>
+<tr><td><span class="tag tag-p">交互</span></td><td>AskUserQuestion, SendMessage</td></tr>
+<tr><td><span class="tag tag-g">工作流</span></td><td>PlanMode, Worktree, Cron, Sleep</td></tr>
+<tr><td><span class="tag tag-r">团队</span></td><td>TeamCreate, TeamDelete, SyntheticOutput</td></tr>
+</tbody>
+</table>
+
+<h3>工具结果大小管理</h3>
+<div class="diagram">结果 → 超过 maxResultSizeChars?
+  Yes → 存 ~/.claude/tool-results/ + 哈希去重
+        API 只收摘要
+  No  → 直接发 API</div>
+
+<!-- ====== CH05 ====== -->
+<h2 class="ch"><span class="n">05</span> 权限与安全系统</h2>
+
+<div class="warning"><strong>可能是 Claude Code 最精密的子系统。</strong></div>
+
+<h3>6 层权限决策链</h3>
+<div class="diagram">工具调用
+  ▼
+[1] Deny 规则  → 命中 → 拒绝
+  ▼
+[2] Allow 规则 → 命中 → 允许
+  ▼
+[3] Ask 规则   → 命中 → 提示用户
+  ▼
+[4] Hook 执行  → allow/deny
+  ▼
+[5] ML 分类器  → 安全→允许 / 不确定→继续
+  ▼
+[6] 用户确认 / 自动拒绝</div>
+
+<h3>Bash AST 安全分析</h3>
+<table>
+<thead><tr><th>危险类别</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>文件系统破坏</td><td><code>rm -rf /</code>, <code>dd if=/dev/zero</code></td></tr>
+<tr><td>凭证窃取</td><td>访问 <code>.env</code>, credentials</td></tr>
+<tr><td>数据外泄</td><td><code>curl</code> 发送敏感数据</td></tr>
+<tr><td>系统破坏</td><td><code>chmod 777</code>, <code>kill -9</code></td></tr>
+</tbody>
+</table>
+
+<h3>自动分类器 (2 阶段)</h3>
+<p>Stage 1 快速分类 → 高置信度直接决策 → Stage 2 XML+思维链 → allow/deny + 置信度</p>
+
+<div class="insight"><strong>权限疲劳检测:</strong> 连续拒绝超阈值 → 不再逐一询问 → 升级为批量权限请求</div>
+
+<!-- ====== CH06 ====== -->
+<h2 class="ch"><span class="n">06</span> 多智能体协作</h2>
+
+<h3>四种 Agent 模式</h3>
+<table>
+<thead><tr><th>模式</th><th>上下文</th><th>生命周期</th><th>适用场景</th></tr></thead>
+<tbody>
+<tr><td><strong>Subagent</strong></td><td>干净</td><td>一次性</td><td>独立搜索/分析</td></tr>
+<tr><td><strong>Fork</strong></td><td>继承父</td><td>一次性</td><td>并行任务 + cache 共享</td></tr>
+<tr><td><strong>Teammate</strong></td><td>独立</td><td>持久</td><td>长期协作角色</td></tr>
+<tr><td><strong>Coordinator</strong></td><td>编排层</td><td>持久</td><td>复杂工作流</td></tr>
+</tbody>
+</table>
+
+<h3>Coordinator 架构</h3>
+<div class="diagram">┌──────────────────┐
+│   Coordinator    │ 编排层
+│  ┌─────┐ ┌─────┐│
+│  │Wkr 1│ │Wkr 2││ 执行层 (工具受限)
+│  └──┬──┘ └──┬──┘│
+│  ┌──┴───────┴──┐│
+│  │ Scratchpad  ││ 共享存储
+│  └─────────────┘│
+└──────────────────┘</div>
+
+<div class="insight"><strong>Fork Cache 共享:</strong> 子 Agent prompt 与父字节级一致 → API prompt cache 命中 → 节省 ~75% input token</div>
+
+<!-- ====== CH07 ====== -->
+<h2 class="ch"><span class="n">07</span> 记忆系统与上下文管理</h2>
+
+<h3>记忆架构</h3>
+<div class="diagram">MEMORY.md (索引, 200行/25KB 限制)
+  └── 子文件 (按主题, 最多200个, 最新优先)
+      └── Agent 记忆 (user / project / local)</div>
+
+<h3>记忆分类</h3>
+<table>
+<thead><tr><th>类型</th><th>隐私</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td><code>user</code></td><td>始终私有</td><td>角色、偏好</td></tr>
+<tr><td><code>feedback</code></td><td>默认私有</td><td>方法指导</td></tr>
+<tr><td><code>project</code></td><td>私有/团队</td><td>工作、目标</td></tr>
+<tr><td><code>reference</code></td><td>通常团队</td><td>外部系统指针</td></tr>
+</tbody>
+</table>
+
+<h3>上下文压缩</h3>
+<table>
+<thead><tr><th>模式</th><th>触发</th><th>机制</th></tr></thead>
+<tbody>
+<tr><td>手动</td><td><code>/compact</code></td><td>用户主动，支持自定义摘要指令</td></tr>
+<tr><td>自动</td><td>Token 超阈值</td><td>AI 摘要历史，替换旧消息</td></tr>
+<tr><td>增量</td><td>CACHED_MICROCOMPACT</td><td>只压缩新增部分</td></tr>
+</tbody>
+</table>
+
+<div class="insight"><strong>Git 状态不更新:</strong> 会话开始快照一次，整个会话不变——牺牲实时性换取性能和 cache 命中</div>
+
+<!-- ====== CH08 ====== -->
+<h2 class="ch"><span class="n">08</span> IDE 桥接与远程控制</h2>
+
+<h3>Bridge 架构</h3>
+<div class="diagram">VS Code / JetBrains  ◄──WebSocket + REST──►  Claude Code CLI</div>
+
+<h3>多层认证</h3>
+<table>
+<thead><tr><th>层</th><th>机制</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Bearer Token (OAuth), 401 自动刷新</td></tr>
+<tr><td>2</td><td>Trusted Device Token</td></tr>
+<tr><td>3</td><td>Session Ingress Token (WebSocket)</td></tr>
+<tr><td>4</td><td>JWT 短时令牌</td></tr>
+</tbody>
+</table>
+
+<h3>传输降级</h3>
+<p>WebSocket (全双工) → SSE (单向推送) → HTTP 轮询 (指数退避+抖动)</p>
+<p>并发: 默认 32 个并发会话，24h 超时</p>
+
+<!-- ====== CH09 ====== -->
+<h2 class="ch"><span class="n">09</span> 隐藏功能与未发布特性</h2>
+
+<h3>40+ Feature Flags</h3>
+<table>
+<thead><tr><th>Flag</th><th>推测功能</th></tr></thead>
+<tbody>
+<tr><td><code>PROACTIVE</code></td><td>主动式 Agent — 自主行动</td></tr>
+<tr><td><code>COORDINATOR_MODE</code></td><td>多 Worker 编排</td></tr>
+<tr><td><code>FORK_SUBAGENT</code></td><td>隐式 Fork + cache 共享</td></tr>
+<tr><td><code>ULTRAPLAN</code></td><td>增强规划模式</td></tr>
+<tr><td><code>ULTRATHINK</code></td><td>扩展思考模式</td></tr>
+<tr><td><code>WEB_BROWSER_TOOL</code></td><td>网页浏览器工具</td></tr>
+<tr><td><code>VOICE_MODE</code></td><td>语音输入 (16kHz/mono)</td></tr>
+<tr><td><code>TRANSCRIPT_CLASSIFIER</code></td><td>自动模式 ML 分类器</td></tr>
+<tr><td><code>EXTRACT_MEMORIES</code></td><td>自动记忆提取</td></tr>
+<tr><td><code>TEAMMEM</code></td><td>团队记忆同步</td></tr>
+<tr><td><code>WORKFLOW_SCRIPTS</code></td><td>工作流自动化</td></tr>
+<tr><td><code>BUDDY</code></td><td>终端伴侣精灵</td></tr>
+</tbody>
+</table>
+
+<h3>有趣发现</h3>
+<p><strong>/good-claude</strong> — 正向反馈 (可能用于 RLHF)<br>
+<strong>Buddy 精灵</strong> — 终端虚拟宠物系统<br>
+<strong>Undercover 模式</strong> — <code>isUndercover()</code> 抑制特定功能<br>
+<strong>Analytics 类型安全</strong> — <code>AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS</code></p>
+
+<!-- ====== CH10 ====== -->
+<h2 class="ch"><span class="n">10</span> 关键设计模式</h2>
+
+<table>
+<thead><tr><th>#</th><th>模式</th><th>解决的问题</th><th>核心思路</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Feature-Gated 死代码消除</td><td>实验功能管理</td><td>编译期移除未启用分支</td></tr>
+<tr><td>2</td><td>Context Object</td><td>参数爆炸</td><td>单一上下文对象，浅拷贝克隆</td></tr>
+<tr><td>3</td><td>大结果磁盘持久化</td><td>上下文有限</td><td>存盘 + 哈希去重 + 摘要</td></tr>
+<tr><td>4</td><td>并行预取</td><td>启动慢</td><td>import 前触发 IO</td></tr>
+<tr><td>5</td><td>Memoized Prompt Sections</td><td>重复计算</td><td>按段缓存，显式失效</td></tr>
+<tr><td>6</td><td>懒加载重型模块</td><td>启动时间</td><td>首次使用时 import()</td></tr>
+<tr><td>7</td><td>权限拒绝追踪</td><td>权限疲劳</td><td>连续拒绝 → 批量权限请求</td></tr>
+<tr><td>8</td><td>Fork Cache 共享</td><td>Token 浪费</td><td>字节对齐 → API cache 命中</td></tr>
+<tr><td>9</td><td>流式工具执行</td><td>串行阻塞</td><td>流式响应中启动工具</td></tr>
+<tr><td>10</td><td>多层权限决策链</td><td>安全 vs 可用</td><td>6 层短路决策</td></tr>
+<tr><td>11</td><td>命令语义分类</td><td>UI 过载</td><td>安全命令自动折叠</td></tr>
+<tr><td>12</td><td>Git 状态快照</td><td>缓存失效</td><td>快照不更新</td></tr>
+<tr><td>13</td><td>buildTool() 工厂</td><td>40+ 工具重复</td><td>工厂提供默认值</td></tr>
+<tr><td>14</td><td>分析类型安全</td><td>PII 泄露</td><td>类型名作"已审查"签名</td></tr>
+<tr><td>15</td><td>Hybrid Transport</td><td>网络差异</td><td>WS→SSE→轮询降级</td></tr>
+</tbody>
+</table>
+
+<!-- ====== CH11 ====== -->
+<h2 class="ch"><span class="n">11</span> 可行动洞察: 29 条</h2>
+
+<h3>Prompt 工程 (5)</h3>
+<table>
+<thead><tr><th>#</th><th>洞察</th><th>建议</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>"先读后改"</td><td>修改前强制先获取当前状态</td></tr>
+<tr><td>2</td><td>反过度工程</td><td>"只做被要求的事"</td></tr>
+<tr><td>3</td><td>禁止暴力重试</td><td>分析原因后换方法</td></tr>
+<tr><td>4</td><td>权限不扩散</td><td>每次敏感操作单独确认</td></tr>
+<tr><td>5</td><td>动态 Prompt</td><td>分段缓存 + 按需注入</td></tr>
+</tbody>
+</table>
+
+<h3>架构 (5) / 多 Agent (4) / UX (4) / 性能 (4) / 记忆 (3) / 安全 (4)</h3>
+<table>
+<thead><tr><th>类别</th><th>关键洞察</th></tr></thead>
+<tbody>
+<tr><td>架构</td><td>工具结果大小管理、三层压缩、多层权限、Feature Flags、Context Object</td></tr>
+<tr><td>多 Agent</td><td>Fork Cache 共享、Worker 工具限制、Scratchpad 模式、任务自动转后台</td></tr>
+<tr><td>UX</td><td>权限疲劳检测、2s 进度反馈、命令语义折叠、多语言自适应</td></tr>
+<tr><td>性能</td><td>并行预取、懒加载、Prompt 分段缓存、Git 快照</td></tr>
+<tr><td>记忆</td><td>分层架构、漂移保护、自动提取</td></tr>
+<tr><td>安全</td><td>Bash AST、分类器+人工、沙盒、设备文件阻止</td></tr>
+</tbody>
+</table>
+
+<h3>最重要的 5 个洞察</h3>
+<div class="insight"><strong>1. Prompt 是产品</strong> — 投入与代码同等精力</div>
+<div class="insight"><strong>2. 安全是多层的</strong> — Deny→Allow→Hook→Classifier→User</div>
+<div class="insight"><strong>3. 上下文是有限的</strong> — 工具结果管理+压缩+存盘=一整套工程</div>
+<div class="insight"><strong>4. 子 Agent 需要隔离</strong> — 权限、工具、上下文逐级递减</div>
+<div class="insight"><strong>5. 性能源于架构</strong> — 预取、懒加载、缓存分段、cache 共享</div>
+
+<!-- ====== CH12 ====== -->
+<h2 class="ch"><span class="n">12</span> 多 Agent 系统设计启示录</h2>
+
+<h3>14 条设计启示</h3>
+<table>
+<thead><tr><th>#</th><th>启示</th><th>核心要点</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>多 Agent 是架构决策</td><td>从第一天设计进去，不是后加功能</td></tr>
+<tr><td>2</td><td>Agent 是资源持有者</td><td>必须有 try/finally 清理机制</td></tr>
+<tr><td>3</td><td>隔离矩阵</td><td>逐项控制每种资源的共享/克隆/独立</td></tr>
+<tr><td>4</td><td>AbortController 链</td><td>取消信号单向向下传播</td></tr>
+<tr><td>5</td><td>四种 Agent 模式</td><td>Subagent/Fork/Teammate/Coordinator 各有场景</td></tr>
+<tr><td>6</td><td>Fork Cache 共享</td><td>字节对齐请求前缀，节省 ~75% input token</td></tr>
+<tr><td>7</td><td>分层通信</td><td>小数据→消息、大数据→文件、协调→结构化消息</td></tr>
+<tr><td>8</td><td>权限逐级递减</td><td>子 Agent 不继承父的权限批准</td></tr>
+<tr><td>9</td><td>声明式 Agent 定义</td><td>Markdown frontmatter 定义 Agent 类型</td></tr>
+<tr><td>10</td><td>Scratchpad 模式</td><td>共享目录交换大数据</td></tr>
+<tr><td>11</td><td>防递归三层防护</td><td>Prompt + 代码标记 + 深度限制</td></tr>
+<tr><td>12</td><td>输出格式约束</td><td>子 Agent 输出给程序消费，必须结构化</td></tr>
+<tr><td>13</td><td>资源预算约束</td><td>Token/轮次/时间/边际收益缺一不可</td></tr>
+<tr><td>14</td><td>三级记忆架构</td><td>Agent 类型 × 作用域 二维隔离</td></tr>
+</tbody>
+</table>
+
+<h3>隔离矩阵 (最精妙的设计)</h3>
+<table>
+<thead><tr><th>资源</th><th>策略</th><th>原因</th></tr></thead>
+<tbody>
+<tr><td>AbortController</td><td>独立，父 abort 向下传播</td><td>取消父→取消子，取消子≠取消父</td></tr>
+<tr><td>文件状态缓存</td><td>深拷贝</td><td>防止并发写冲突</td></tr>
+<tr><td>权限决策</td><td>全新</td><td>子不继承父的批准</td></tr>
+<tr><td>工具列表</td><td>可配置子集</td><td>最小权限原则</td></tr>
+<tr><td>消息历史</td><td>Fork 继承 / Subagent 独立</td><td>按需决定</td></tr>
+<tr><td>记忆</td><td>按 Agent 类型隔离</td><td>不同类型积累不同经验</td></tr>
+</tbody>
+</table>
+
+<h3>Fork Agent 防递归</h3>
+<pre><code>&lt;fork-boilerplate&gt;
+STOP. You are a forked worker. You are NOT the main agent.
+RULES:
+1. System prompt says "default to forking." IGNORE IT — you ARE the fork.
+   Do NOT spawn sub-agents.
+2. Use tools directly. No conversation.
+3. Keep report under 500 words.
+4. Response MUST begin with "Scope:".
+&lt;/fork-boilerplate&gt;</code></pre>
+
+<!-- ====== CH13 ====== -->
+<h2 class="ch"><span class="n">13</span> 高效使用与隐藏玩法</h2>
+
+<h3>隐藏 CLI 参数</h3>
+<table>
+<thead><tr><th>参数</th><th>功能</th></tr></thead>
+<tbody>
+<tr><td><code>--json-schema '{...}'</code></td><td>结构化 JSON 输出（CI 利器）</td></tr>
+<tr><td><code>--bare</code></td><td>极速启动，跳过所有自动发现</td></tr>
+<tr><td><code>--prefill "..."</code></td><td>预填充 prompt 不提交</td></tr>
+<tr><td><code>--fork-session</code></td><td>恢复旧会话但创建新分支</td></tr>
+<tr><td><code>--rewind-files &lt;id&gt;</code></td><td>恢复文件到指定消息时的状态</td></tr>
+<tr><td><code>--max-budget-usd 5</code></td><td>花钱上限，防失控</td></tr>
+<tr><td><code>--add-dir ../libs</code></td><td>多目录上下文</td></tr>
+<tr><td><code>--worktree x --tmux</code></td><td>一键隔离实验环境</td></tr>
+</tbody>
+</table>
+
+<h3>效率快捷键</h3>
+<table>
+<thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+<tbody>
+<tr><td><code>Meta+P</code></td><td>模型选择器</td></tr>
+<tr><td><code>Meta+O</code></td><td>Fast 模式切换</td></tr>
+<tr><td><code>Meta+T</code></td><td>思考模式切换</td></tr>
+<tr><td><code>Shift+Tab</code></td><td>循环权限模式</td></tr>
+<tr><td><code>Ctrl+R</code></td><td>历史搜索</td></tr>
+<tr><td><code>Ctrl+X Ctrl+E</code></td><td>外部编辑器写 prompt</td></tr>
+<tr><td><code>Ctrl+S</code></td><td>暂存当前输入</td></tr>
+<tr><td><code>Alt+V</code></td><td>粘贴图片</td></tr>
+</tbody>
+</table>
+
+<h3>权限白名单模板（减少 70% 弹框）</h3>
+<pre><code>{
+  "permissions": {
+    "allow": [
+      "Read", "Glob", "Grep",
+      "Bash(git:*)", "Bash(npm:test)",
+      "Bash(npm:run:*)", "Bash(ls:*)",
+      "Bash(cat:*)", "Bash(grep:*)"
+    ],
+    "deny": [
+      "Bash(rm:-rf:*)", "Bash(sudo:*)"
+    ]
+  }
+}</code></pre>
+
+<h3>Hook 自动化示例</h3>
+<pre><code>// 编辑后自动格式化
+{ "type": "command",
+  "command": "prettier --write $CHANGED_FILES",
+  "if": "Edit(*)", "timeout": 10, "async": true }
+
+// Agent 验证——编辑后自动跑测试
+{ "type": "agent",
+  "prompt": "Run unit tests and verify all pass.",
+  "model": "claude-sonnet-4-6",
+  "if": "Edit(src/**/*)", "timeout": 120 }</code></pre>
+
+<h3>精选环境变量</h3>
+<table>
+<thead><tr><th>变量</th><th>作用</th></tr></thead>
+<tbody>
+<tr><td><code>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1</code></td><td>隐私模式</td></tr>
+<tr><td><code>DISABLE_AUTO_COMPACT=1</code></td><td>手动控制压缩</td></tr>
+<tr><td><code>BASH_MAX_TIMEOUT_MS=300000</code></td><td>Bash 超时 5 分钟</td></tr>
+<tr><td><code>ANTHROPIC_SMALL_FAST_MODEL=haiku</code></td><td>子 Agent 用便宜模型</td></tr>
+<tr><td><code>ENABLE_LSP_TOOL=1</code></td><td>启用代码智能</td></tr>
+</tbody>
+</table>
+
+<h3>CLAUDE.md 高级技巧</h3>
+<p>向上递归扫描父目录 → <code>~/CLAUDE.md</code> 放全局偏好，项目根目录放规则</p>
+<p>外部引用: <code>&lt;!-- @include ./coding-standards.md --&gt;</code></p>
+<p>特殊 headers: <code># claude up</code> (初始化), <code># claude hooks</code> (Hook 定义)</p>
+
+<h3>效率 Top 10</h3>
+<table>
+<thead><tr><th>#</th><th>技巧</th><th>效果</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>权限白名单</td><td>减少 70%+ 弹框</td></tr>
+<tr><td>2</td><td>Meta+P / Meta+O</td><td>快速切模型省钱</td></tr>
+<tr><td>3</td><td>/compact "自定义"</td><td>精确控制上下文</td></tr>
+<tr><td>4</td><td>--print --json-schema</td><td>CI/CD 集成</td></tr>
+<tr><td>5</td><td>CLAUDE.md 层级发现</td><td>偏好自动加载</td></tr>
+<tr><td>6</td><td>PostToolUse Hook</td><td>自动格式化/测试</td></tr>
+<tr><td>7</td><td>--worktree --tmux</td><td>一键隔离环境</td></tr>
+<tr><td>8</td><td>--resume --fork</td><td>无损探索方案</td></tr>
+<tr><td>9</td><td>自定义 Agent 类型</td><td>专业化 Agent 永久可用</td></tr>
+<tr><td>10</td><td>Ctrl+X Ctrl+E</td><td>外部编辑器写 prompt</td></tr>
+</tbody>
+</table>
+
+<!-- ====== 页脚 ====== -->
+<div class="footer">
+<p><strong>Claude Code 源码深度分析</strong></p>
+<p>基于 2026-03-31 npm source map 泄露 &nbsp;|&nbsp; 13 章 &nbsp;|&nbsp; 3,400+ 行</p>
+<p style="margin-top:6px;font-size:.78em">本报告仅用于教育研究。原始源码版权归 Anthropic 所有。</p>
+</div>
+
+</body>
+</html>
