@@ -153,6 +153,15 @@ claude --worktree feature-x --tmux
 
 > **注意：** `Ctrl+C` 和 `Ctrl+D` 不可重绑定（保留给中断和退出）。
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我创建 Claude Code 自定义快捷键配置文件 ~/.claude/keybindings.json，添加以下快捷键：Ctrl+Shift+R 触发 review，Ctrl+Shift+T 触发 test。如果文件已存在就合并。
+```
+
 ---
 
 ## 三、CLAUDE.md 高级用法
@@ -200,6 +209,15 @@ Agent 定义
 ```
 
 CLAUDE.md 可以引用外部文件——保持主文件简洁，详细内容分文件。
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在项目 CLAUDE.md 中添加 @include 引用：如果项目有 coding-standards.md 就引用它，如果有 api-docs.md 也引用。用 <!-- @include ./filename.md --> 格式。先检查这些文件是否存在。
+```
 
 ### 禁用 CLAUDE.md 自动发现
 
@@ -336,6 +354,15 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
 }
 ```
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在 ~/.claude/settings.json 的 hooks.PostToolUse 中添加一个 Hook：每次执行 git 相关的 Bash 命令后，自动运行 git add -A。超时 5 秒。如果已存在就追加。
+```
+
 ### 例 3：Agent 验证器——完成后自动跑测试
 
 ```json
@@ -352,6 +379,15 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
     ]
   }
 }
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在 ~/.claude/settings.json 中添加一个 Agent 类型的 Hook：每次编辑 src/ 下的文件后，自动用 claude-sonnet-4-6 跑一遍单元测试并验证是否通过。超时 120 秒。
 ```
 
 ### 例 4：HTTP Webhook 通知
@@ -371,6 +407,15 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
     ]
   }
 }
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在 ~/.claude/settings.json 中添加一个 SessionEnd Hook，类型是 http，会话结束时发送通知到 Slack webhook。URL 先用占位符，我之后替换。超时 5 秒。
 ```
 
 ### 所有 Hook 事件 (26 种)
@@ -417,6 +462,15 @@ export CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=8
 export API_TIMEOUT_MS=60000
 ```
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在 ~/.bashrc 或 ~/.zshrc 中添加 Claude Code 性能相关环境变量：BASH_MAX_TIMEOUT_MS=300000（5分钟超时）和 ANTHROPIC_SMALL_FAST_MODEL=claude-haiku-4-5-20251001（子Agent用便宜模型）。检查是否已存在，避免重复。
+```
+
 ### 功能开关
 
 ```bash
@@ -439,6 +493,15 @@ export ENABLE_LSP_TOOL=1
 export ENABLE_TOOL_SEARCH=1
 ```
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我在 ~/.bashrc 或 ~/.zshrc 中添加 Claude Code 隐私模式配置：CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 和 ENABLE_LSP_TOOL=1。检查是否已存在。
+```
+
 ### 模型配置
 
 ```bash
@@ -453,6 +516,15 @@ export ANTHROPIC_BASE_URL=https://my-proxy.company.com/v1
 
 # 自定义请求头
 export ANTHROPIC_CUSTOM_HEADERS='{"X-Team": "platform"}'
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我配置 Claude Code 默认使用 Sonnet 模型（省钱），子 Agent 用 Haiku。在 ~/.bashrc 或 ~/.zshrc 中添加：ANTHROPIC_MODEL=claude-sonnet-4-6 和 ANTHROPIC_SMALL_FAST_MODEL=claude-haiku-4-5-20251001。
 ```
 
 ### 代理/网络
@@ -568,6 +640,15 @@ claude --from-pr https://github.com/org/repo/pull/123  # URL
 
 > **技巧：** 当上下文快满时，用自定义指令 compact 可以精确控制保留什么。
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我压缩当前对话上下文。执行 /compact "只保留架构决策、API 设计和关键代码片段，删除探索性对话"。
+```
+
 ---
 
 ## 九、MCP 服务器：扩展 Claude Code 的能力
@@ -602,6 +683,15 @@ claude --mcp-config '{"servers":{"my-db":{"command":"npx","args":["mcp-server-po
 **方式 3：从 Claude Desktop 导入**
 ```bash
 claude mcp add-from-claude-desktop
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我配置一个 MCP 文件系统服务器：在 ~/.claude/mcp-servers.json 中添加 @anthropic-ai/mcp-server-filesystem，允许访问当前项目目录。如果文件不存在就创建。
 ```
 
 ### 严格 MCP 模式
@@ -640,6 +730,15 @@ maxTurns: 50
 
 使用：对话中 Claude Code 会自动发现并在 Agent 工具中提供 `reviewer` 类型。
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我创建一个只读代码审查 Agent：在 .claude/agents/reviewer.md 中定义，工具限制为 Read/Glob/Grep，用 claude-sonnet-4-6 模型，最多 50 轮。规则：不修改文件、检查安全漏洞和性能问题、按 Critical/Warning/Info 分级。
+```
+
 多 Agent 的编排模式和协作机制可参考第三章中的架构说明。
 
 <img src="../assets/multi-agent-modes.svg" alt="多Agent编排模式" width="100%">
@@ -652,6 +751,15 @@ maxTurns: 50
 
 ```bash
 claude --agents '{"quick-check":{"description":"快速检查","prompt":"用最少的步骤检查代码健康度"}}'
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我创建一个项目健康检查 Agent：在 .claude/agents/quick-check.md 中定义，工具为 Read/Glob/Grep/Bash，用 haiku 模型，最多 20 轮。任务：检查 npm audit 漏洞、未处理的 TODO/FIXME、是否有 .env 被 git 追踪、TypeScript any 类型泛滥。输出不超过 20 行摘要。
 ```
 
 ---
@@ -683,6 +791,15 @@ description: 精简输出，不解释，只给代码
 3. 直接输出代码/命令
 4. 如果是代码修改，只显示 diff
 5. 回复控制在 3 行以内（除非是代码块）
+```
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我创建一个精简输出风格：在 ~/.claude/output-styles/concise.md 中定义，规则：不解释代码、不给替代方案、直接输出代码或命令、回复控制在 3 行以内。
 ```
 
 ---
@@ -814,6 +931,15 @@ Feature flag `BUDDY` 控制开关。
 ```
 
 真正的 Vim 模式——Escape 切换 INSERT/NORMAL，支持 hjkl 导航。
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我开启 Claude Code 的 Vim 模式。运行 /vim 命令切换到 Vim 编辑模式，并在 ~/.claude/settings.json 中设置 editorMode 为 vim 使其永久生效。
+```
 
 ---
 
