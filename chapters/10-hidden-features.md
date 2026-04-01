@@ -1,5 +1,10 @@
 # 第十章：隐藏功能与未发布特性
 
+> **导读｜读完这章能做什么**
+> - 了解 40+ Feature Flags 揭示的产品方向
+> - 找到 PROACTIVE/VOICE/ULTRATHINK 等未发布功能
+> - 理解 Bun feature() 的编译期死代码消除
+
 ## Feature Flags 系统
 
 Claude Code 通过 Bun 的 `feature()` 实现编译期 feature flags。未启用的 flag 对应的代码在构建时被**完全剥离**。

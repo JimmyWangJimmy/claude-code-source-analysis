@@ -1,5 +1,10 @@
 # 第一章 Claude Code 高效使用手册
 
+> **导读｜读完这章能做什么**
+> - 配置权限白名单减少 70% 确认弹框
+> - 用 Meta+P 快速切模型省钱
+> - 用 --json-schema 做 CI 集成
+
 > 从源码中整理的技巧、隐藏命令、高级配置，帮助开发者更高效地使用 Claude Code。
 
 ---
@@ -30,7 +35,7 @@ claude --bare --system-prompt "你是一个 shell 脚本专家"
 claude --prefill "帮我重构 src/utils/ 下所有"
 ```
 
-打开交互界面时 prompt 已填好，你可以编辑后再提交。适合常用的长 prompt 模板。
+打开交互界面时 prompt 已填好，可以编辑后再提交。适合常用的长 prompt 模板。
 
 ### 分叉会话：从断点开始新分支
 
@@ -142,13 +147,13 @@ claude --worktree feature-x --tmux
 Claude Code 会**向上递归扫描**所有父目录的 CLAUDE.md：
 
 ```
-/home/user/projects/my-app/src/  ← 你在这里
+/home/user/projects/my-app/src/  ← 当前目录
 /home/user/projects/my-app/CLAUDE.md  ← 加载
 /home/user/projects/CLAUDE.md    ← 也加载
 /home/user/CLAUDE.md             ← 也加载
 ```
 
-所以你可以在 `~/CLAUDE.md` 放全局偏好，在项目根目录放项目规则。
+所以可以在 `~/CLAUDE.md` 放全局偏好，在项目根目录放项目规则。
 
 ### 特殊 Section Headers
 
@@ -195,7 +200,7 @@ claude --bare
 
 ### 减少重复确认
 
-每次都问你 "Allow Bash(git status)?" 烦不烦？在 settings.json 中配置一次，之后不再弹窗：
+每次都弹 "Allow Bash(git status)?" 确认框？在 settings.json 中配置一次，之后不再弹窗：
 
 ```json
 {
@@ -768,7 +773,7 @@ Feature flag `BUDDY` 控制开关。
 
 ## 十五、推荐配置模板
 
-把这些放在你的 `~/.claude/settings.json` 里：
+把这些放在 `~/.claude/settings.json` 里：
 
 ```json
 {
@@ -803,7 +808,7 @@ Feature flag `BUDDY` 控制开关。
 }
 ```
 
-加上你的 `~/CLAUDE.md`：
+加上 `~/CLAUDE.md`：
 
 ```markdown
 # claude

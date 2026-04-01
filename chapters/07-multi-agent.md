@@ -1,5 +1,10 @@
 # 第七章：多智能体协作系统
 
+> **导读｜读完这章能做什么**
+> - 区分 Subagent/Fork/Teammate/Coordinator 的适用场景
+> - 理解 Fork Cache 共享的 token 节省原理
+> - 参考 Scratchpad 模式做 Agent 间数据交换
+
 ## 四种 Agent 模式
 
 <img src="../assets/multi-agent-modes.svg" alt="四种Agent模式" width="100%">

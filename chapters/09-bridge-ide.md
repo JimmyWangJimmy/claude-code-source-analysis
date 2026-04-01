@@ -1,19 +1,17 @@
 # 第九章：IDE 桥接与远程控制
 
+> **导读｜读完这章能做什么**
+> - 了解 VS Code/JetBrains 与 Claude Code 的通信机制
+> - 理解 WebSocket→SSE→轮询的降级策略
+> - 参考 4 层认证设计
+
 ## Bridge 系统概述
 
 Bridge 是 Claude Code CLI 与 IDE 扩展 (VS Code / JetBrains) 之间的双向通信层。
 
 ### 架构
 
-```
-┌─────────────────┐        ┌─────────────────┐
-│   VS Code /     │        │   Claude Code   │
-│   JetBrains     │◄─────►│   CLI           │
-│   Extension     │  WS    │                 │
-│                 │ + REST  │                 │
-└─────────────────┘        └─────────────────┘
-```
+<img src="../assets/bridge-transport.svg" alt="IDE桥接架构" width="100%">
 
 ---
 

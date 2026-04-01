@@ -1,5 +1,10 @@
 # 第四章 System Prompt 工程
 
+> **导读｜读完这章能做什么**
+> - 直接复用 7 条 prompt 策略到自己的 Agent
+> - 用正反示例检查自己的 prompt 有没有踩坑
+> - 参考动态组装实现 prompt cache 命中
+
 > Claude Code 的 system prompt 是 Anthropic 投入大量调优工作的产物。理解它的结构和策略，对构建 AI Agent 有直接参考价值。
 
 ## Prompt 身份定义
