@@ -18,15 +18,6 @@ Claude Code 的持久化记忆是其跨会话保持一致性的基础。
 - 超出部分被截断 (模型会收到截断警告)
 - 设计意图: MEMORY.md 是索引，详细内容放在子文件中
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
-
-```
-帮我初始化 Claude Code 记忆系统：在项目根目录创建 CLAUDE.md（如果不存在），内容包括项目基本信息和工作规则。然后检查 ~/.claude/ 目录下是否已有 MEMORY.md，如果没有就创建一个空的模板，包含"项目偏好"和"常用命令"两个 section。
-```
-
-</details>
-
 ### 扫描记忆文件
 
 - 从 `~/.claude/` 和项目 `.claude/` 目录递归扫描

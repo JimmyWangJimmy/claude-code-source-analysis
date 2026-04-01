@@ -32,15 +32,6 @@
 
 <img src="../assets/permission-chain.svg" alt="6层权限决策链" width="100%">
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
-
-```
-帮我查看当前 Claude Code 的权限配置：读取 ~/.claude/settings.json 和项目下的 .claude/settings.json，列出所有 allow、deny、ask 规则，告诉我当前的权限模式是什么。
-```
-
-</details>
-
 ---
 
 ## 权限规则系统

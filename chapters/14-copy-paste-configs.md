@@ -5,14 +5,20 @@
 > - 分三档：保守版（安全优先）、日常版（平衡）、全开版（效率最大化）
 > - 每段配置标注了作用和风险等级
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
 
 ```
-读取这个附录的全部配置内容，然后根据我的项目情况（先问我用什么语言和框架），帮我一次性完成所有配置：settings.json 权限白名单、CLAUDE.md 项目规则、Hook 自动格式化、reviewer Agent、Shell 别名。逐个文件创建或更新，完成后汇报。
+帮我一次性完成 Claude Code 全套配置（先问我用什么语言和框架）：
+1. ~/.claude/settings.json — 权限白名单 + prettier 自动格式化 Hook
+2. 项目 CLAUDE.md — 语言/框架/测试/格式化 + 工作规则
+3. ~/CLAUDE.md — 全局偏好（中文回复、不用emoji、先问再做）
+4. .claude/agents/reviewer.md — 只读代码审查 Agent
+5. Shell 别名 cc/ccp/ccf/ccb/ccr 写入 ~/.bashrc 或 ~/.zshrc
+逐个文件创建或更新，完成后列出所有改动。
 ```
-
-</details>
 
 ---
 

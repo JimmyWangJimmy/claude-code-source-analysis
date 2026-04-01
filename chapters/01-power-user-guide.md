@@ -29,6 +29,21 @@ claude --bare --system-prompt "你是一个 shell 脚本专家"
 
 跳过所有自动发现：CLAUDE.md、hooks、LSP、plugins、keychain、auto-memory。启动速度最快，适合在沙盒/CI 中使用。
 
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+在我的 ~/.bashrc 或 ~/.zshrc 中添加以下 Claude Code 快捷别名（如果已存在就跳过）：
+alias cc='claude'
+alias ccp='claude --print'
+alias ccf='claude --fast'
+alias ccb='claude --bare'
+alias ccr='claude --resume'
+alias ccc='claude --continue'
+```
+
 ### 预填充 Prompt（不提交）
 
 ```bash
@@ -226,14 +241,27 @@ claude --bare
 }
 ```
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
 
 ```
-帮我配置 Claude Code 权限白名单。在 ~/.claude/settings.json 中设置：allow 规则包括 Read、Glob、Grep、所有 git 命令、npm test、npm run、npx、node、python、ls、cat、head、tail、find、grep、rg、wc、echo、which、env、pwd、date。deny 规则包括 rm -rf、sudo、chmod 777、curl POST、dd。如果文件已存在，合并进去不要覆盖其他配置。
-```
+帮我配置 Claude Code 权限白名单。编辑 ~/.claude/settings.json，在 permissions 中设置以下规则（如果文件已存在就合并，不覆盖其他配置）：
 
-</details>
+allow:
+- Read, Glob, Grep
+- Bash(git:*), Bash(npm:test), Bash(npm:run:*), Bash(npx:*)
+- Bash(node:*), Bash(python:*), Bash(bun:*), Bash(cargo:*), Bash(go:*)
+- Bash(ls:*), Bash(cat:*), Bash(head:*), Bash(tail:*)
+- Bash(find:*), Bash(grep:*), Bash(rg:*), Bash(wc:*)
+- Bash(echo:*), Bash(which:*), Bash(env:*), Bash(pwd), Bash(date)
+- Bash(mkdir:*), Bash(touch:*), Bash(cp:*), Bash(mv:*)
+
+deny:
+- Bash(rm:-rf:*), Bash(sudo:*), Bash(chmod:777:*)
+- Bash(curl:*:POST:*), Bash(dd:*), Bash(kill:-9:*), Bash(pkill:*)
+```
 
 ### 权限规则语法
 
@@ -282,14 +310,14 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
 }
 ```
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
 
 ```
-帮我在 ~/.claude/settings.json 的 hooks.PostToolUse 中添加一个 Hook：每次 Edit 工具执行后，自动运行 prettier --write 格式化被修改的文件。设为异步执行，超时 10 秒。如果 hooks 字段不存在就创建。
+帮我在 ~/.claude/settings.json 中添加 Hook 配置：每次 Edit 工具执行后，自动运行 prettier --write 格式化修改过的文件。设为异步执行、超时 10 秒。如果 hooks 字段不存在就创建，已存在就追加不覆盖。
 ```
-
-</details>
 
 ### 例 2：每次 Bash 后自动 git add
 
@@ -325,15 +353,6 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
   }
 }
 ```
-
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
-
-```
-帮我在 ~/.claude/settings.json 的 hooks.PostToolUse 中添加一个 Agent 类型的 Hook：每次编辑 src/ 目录下的文件后，自动用 claude-sonnet-4-6 模型跑一遍单元测试并验证是否通过。超时 120 秒。
-```
-
-</details>
 
 ### 例 4：HTTP Webhook 通知
 
@@ -849,14 +868,21 @@ Feature flag `BUDDY` 控制开关。
 
 **效果：** 常见读取/搜索/git 操作无需确认，格式化自动运行，记忆跨会话保留，个人偏好始终生效。
 
-<details>
-<summary>📋 复制给 Claude，一键配置</summary>
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
 
 ```
-帮我做 Claude Code 项目初始化：1) 在项目根目录创建 CLAUDE.md，内容包括项目语言、框架、测试工具、格式化工具，以及工作规则（先读后改、一次做一件事、报错先分析不重试）。2) 创建 .claude/settings.json 配置权限白名单。3) 创建 .claude/agents/reviewer.md 定义一个只读代码审查 Agent。请先问我项目用什么语言和框架。
+帮我创建全局 Claude Code 偏好文件 ~/CLAUDE.md，内容：
+- 回复用中文
+- 不用 emoji
+- 重要决策先说方案再执行
+- 不确定的事先问，不要猜
+- 不要给时间估计
+- 修改代码前先读文件
+如果文件已存在就追加到末尾，不覆盖已有内容。
 ```
-
-</details>
 
 下图展示了 Claude Code 的整体架构，便于理解上述配置项如何与各子系统关联：
 
@@ -878,3 +904,16 @@ Feature flag `BUDDY` 控制开关。
 | 8 | `--resume --fork-session` | 不影响原会话地探索不同方案 |
 | 9 | 自定义 Agent 类型 | 专用 Agent 一次配置长期可用 |
 | 10 | `Ctrl+X Ctrl+E` 外部编辑器 | 复杂 prompt 用 vim/vscode 编写 |
+
+<div style="background:#1a1a2e;border-left:4px solid #f9ca24;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0">
+<strong style="color:#f9ca24;font-size:14px">📋 粘贴给 Claude Code</strong><br>
+<span style="color:#a0a0b0;font-size:12px">复制下方内容 → 粘贴到 Claude Code 终端 → 自动完成配置</span>
+</div>
+
+```
+帮我做 Claude Code 项目初始化（先问我项目用什么语言和框架）：
+1. 创建 CLAUDE.md：包含项目语言、框架、测试工具，加上工作规则（先读后改、一次一件事、报错先分析）
+2. 创建 .claude/settings.json：权限白名单（放行 git/npm/搜索/读取，拒绝 rm -rf 和 sudo）
+3. 创建 .claude/agents/reviewer.md：只读代码审查 Agent（工具限制为 Read/Glob/Grep，最多 50 轮）
+完成后逐个汇报创建了什么。
+```
