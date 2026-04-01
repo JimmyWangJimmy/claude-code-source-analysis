@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui,sans-serif">
+  <defs>
+    <filter id="s3"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.12"/></filter>
+  </defs>
+  <text x="400" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2d3436">四种 Agent 协作模式</text>
+  <!-- Subagent -->
+  <g transform="translate(30,50)">
+    <rect width="170" height="320" rx="12" fill="#f8f4ff" stroke="#6c5ce7" stroke-width="2" filter="url(#s3)"/>
+    <rect width="170" height="40" rx="12" fill="#6c5ce7"/>
+    <rect y="28" width="170" height="12" fill="#6c5ce7"/>
+    <text x="85" y="26" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Subagent</text>
+    <text x="85" y="70" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">一次性任务</text>
+    <text x="85" y="95" text-anchor="middle" fill="#636e72" font-size="10">干净上下文</text>
+    <text x="85" y="115" text-anchor="middle" fill="#636e72" font-size="10">完成即销毁</text>
+    <text x="85" y="135" text-anchor="middle" fill="#636e72" font-size="10">结果返回父</text>
+    <line x1="20" y1="155" x2="150" y2="155" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="180" text-anchor="middle" fill="#6c5ce7" font-size="10" font-weight="600">适用场景</text>
+    <text x="85" y="200" text-anchor="middle" fill="#636e72" font-size="10">搜索文件</text>
+    <text x="85" y="218" text-anchor="middle" fill="#636e72" font-size="10">读取文档</text>
+    <text x="85" y="236" text-anchor="middle" fill="#636e72" font-size="10">独立分析</text>
+    <line x1="20" y1="256" x2="150" y2="256" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="280" text-anchor="middle" fill="#636e72" font-size="9">模型可覆盖</text>
+    <text x="85" y="300" text-anchor="middle" fill="#636e72" font-size="9">opus / sonnet / haiku</text>
+  </g>
+  <!-- Fork -->
+  <g transform="translate(220,50)">
+    <rect width="170" height="320" rx="12" fill="#f0fff4" stroke="#00b894" stroke-width="2" filter="url(#s3)"/>
+    <rect width="170" height="40" rx="12" fill="#00b894"/>
+    <rect y="28" width="170" height="12" fill="#00b894"/>
+    <text x="85" y="26" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Fork</text>
+    <text x="85" y="70" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">继承父上下文</text>
+    <text x="85" y="95" text-anchor="middle" fill="#636e72" font-size="10">prompt 字节级对齐</text>
+    <text x="85" y="115" text-anchor="middle" fill="#636e72" font-size="10">API cache 命中</text>
+    <text x="85" y="135" text-anchor="middle" fill="#636e72" font-size="10">节省 ~75% token</text>
+    <line x1="20" y1="155" x2="150" y2="155" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="180" text-anchor="middle" fill="#00b894" font-size="10" font-weight="600">适用场景</text>
+    <text x="85" y="200" text-anchor="middle" fill="#636e72" font-size="10">并行分支任务</text>
+    <text x="85" y="218" text-anchor="middle" fill="#636e72" font-size="10">需要当前上下文</text>
+    <text x="85" y="236" text-anchor="middle" fill="#636e72" font-size="10">探索多方案</text>
+    <line x1="20" y1="256" x2="150" y2="256" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="280" text-anchor="middle" fill="#636e72" font-size="9">防递归保护</text>
+    <text x="85" y="300" text-anchor="middle" fill="#636e72" font-size="9">FORK_BOILERPLATE_TAG</text>
+  </g>
+  <!-- Teammate -->
+  <g transform="translate(410,50)">
+    <rect width="170" height="320" rx="12" fill="#fff8e1" stroke="#fdcb6e" stroke-width="2" filter="url(#s3)"/>
+    <rect width="170" height="40" rx="12" fill="#fdcb6e"/>
+    <rect y="28" width="170" height="12" fill="#fdcb6e"/>
+    <text x="85" y="26" text-anchor="middle" fill="#2d3436" font-size="13" font-weight="700">Teammate</text>
+    <text x="85" y="70" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">持久化角色</text>
+    <text x="85" y="95" text-anchor="middle" fill="#636e72" font-size="10">独立上下文</text>
+    <text x="85" y="115" text-anchor="middle" fill="#636e72" font-size="10">消息传递通信</text>
+    <text x="85" y="135" text-anchor="middle" fill="#636e72" font-size="10">跨任务存活</text>
+    <line x1="20" y1="155" x2="150" y2="155" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="180" text-anchor="middle" fill="#e17055" font-size="10" font-weight="600">适用场景</text>
+    <text x="85" y="200" text-anchor="middle" fill="#636e72" font-size="10">长期协作角色</text>
+    <text x="85" y="218" text-anchor="middle" fill="#636e72" font-size="10">频繁消息交换</text>
+    <text x="85" y="236" text-anchor="middle" fill="#636e72" font-size="10">"研究员""测试员"</text>
+    <line x1="20" y1="256" x2="150" y2="256" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="280" text-anchor="middle" fill="#636e72" font-size="9">邮箱 + 消息队列</text>
+    <text x="85" y="300" text-anchor="middle" fill="#636e72" font-size="9">SendMessageTool</text>
+  </g>
+  <!-- Coordinator -->
+  <g transform="translate(600,50)">
+    <rect width="170" height="320" rx="12" fill="#ffeef0" stroke="#e17055" stroke-width="2" filter="url(#s3)"/>
+    <rect width="170" height="40" rx="12" fill="#e17055"/>
+    <rect y="28" width="170" height="12" fill="#e17055"/>
+    <text x="85" y="26" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Coordinator</text>
+    <text x="85" y="70" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">中央编排</text>
+    <text x="85" y="95" text-anchor="middle" fill="#636e72" font-size="10">管理多个 Worker</text>
+    <text x="85" y="115" text-anchor="middle" fill="#636e72" font-size="10">Worker 工具受限</text>
+    <text x="85" y="135" text-anchor="middle" fill="#636e72" font-size="10">Scratchpad 共享</text>
+    <line x1="20" y1="155" x2="150" y2="155" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="180" text-anchor="middle" fill="#e17055" font-size="10" font-weight="600">适用场景</text>
+    <text x="85" y="200" text-anchor="middle" fill="#636e72" font-size="10">复杂多步骤流程</text>
+    <text x="85" y="218" text-anchor="middle" fill="#636e72" font-size="10">动态任务分配</text>
+    <text x="85" y="236" text-anchor="middle" fill="#636e72" font-size="10">结构化进度追踪</text>
+    <line x1="20" y1="256" x2="150" y2="256" stroke="#dfe6e9" stroke-width="1"/>
+    <text x="85" y="280" text-anchor="middle" fill="#636e72" font-size="9">XML 通知协议</text>
+    <text x="85" y="300" text-anchor="middle" fill="#636e72" font-size="9">&lt;task-notification&gt;</text>
+  </g>
+</svg>

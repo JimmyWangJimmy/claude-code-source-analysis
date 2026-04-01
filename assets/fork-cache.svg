@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="system-ui,sans-serif">
+  <defs>
+    <filter id="s5"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.12"/></filter>
+    <marker id="a6" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6c5ce7"/></marker>
+  </defs>
+  <text x="380" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2d3436">Fork Agent Prompt Cache 共享</text>
+  <!-- Parent -->
+  <rect x="250" y="44" width="260" height="40" rx="8" fill="#6c5ce7" filter="url(#s5)"/>
+  <text x="380" y="70" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">父 Agent (Prompt = P)</text>
+  <!-- Lines to children -->
+  <line x1="300" y1="84" x2="140" y2="115" stroke="#6c5ce7" stroke-width="2" marker-end="url(#a6)"/>
+  <line x1="380" y1="84" x2="380" y2="115" stroke="#6c5ce7" stroke-width="2" marker-end="url(#a6)"/>
+  <line x1="460" y1="84" x2="620" y2="115" stroke="#6c5ce7" stroke-width="2" marker-end="url(#a6)"/>
+  <!-- Child 1 -->
+  <rect x="30" y="117" width="220" height="36" rx="6" fill="#a29bfe" filter="url(#s5)"/>
+  <text x="140" y="140" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Fork Agent 1</text>
+  <!-- Child 2 -->
+  <rect x="270" y="117" width="220" height="36" rx="6" fill="#a29bfe" filter="url(#s5)"/>
+  <text x="380" y="140" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Fork Agent 2</text>
+  <!-- Child 3 -->
+  <rect x="510" y="117" width="220" height="36" rx="6" fill="#a29bfe" filter="url(#s5)"/>
+  <text x="620" y="140" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Fork Agent 3</text>
+  <!-- Request breakdown -->
+  <rect x="30" y="175" width="700" height="32" rx="4" fill="#00b894"/>
+  <text x="380" y="196" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">字节级完全相同的前缀 → Anthropic API prompt cache 命中</text>
+  <!-- Breakdown boxes -->
+  <g transform="translate(30,225)">
+    <rect width="130" height="48" rx="6" fill="#00b894" filter="url(#s5)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">System Prompt</text>
+    <text x="65" y="38" text-anchor="middle" fill="#e0ffe0" font-size="9">字节对齐 ✓</text>
+  </g>
+  <g transform="translate(170,225)">
+    <rect width="120" height="48" rx="6" fill="#00b894" filter="url(#s5)"/>
+    <text x="60" y="22" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">工具列表</text>
+    <text x="60" y="38" text-anchor="middle" fill="#e0ffe0" font-size="9">exactTools ✓</text>
+  </g>
+  <g transform="translate(300,225)">
+    <rect width="120" height="48" rx="6" fill="#00b894" filter="url(#s5)"/>
+    <text x="60" y="22" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">消息历史</text>
+    <text x="60" y="38" text-anchor="middle" fill="#e0ffe0" font-size="9">完整保留 ✓</text>
+  </g>
+  <g transform="translate(430,225)">
+    <rect width="130" height="48" rx="6" fill="#00b894" filter="url(#s5)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">Tool Results</text>
+    <text x="65" y="38" text-anchor="middle" fill="#e0ffe0" font-size="9">同一占位符 ✓</text>
+  </g>
+  <g transform="translate(570,225)">
+    <rect width="160" height="48" rx="6" fill="#e17055" filter="url(#s5)"/>
+    <text x="80" y="22" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">Directive</text>
+    <text x="80" y="38" text-anchor="middle" fill="#ffe0e0" font-size="9">每个子 Agent 不同</text>
+  </g>
+  <!-- Cost comparison -->
+  <rect x="80" y="295" width="260" height="34" rx="6" fill="#dfe6e9" filter="url(#s5)"/>
+  <text x="210" y="317" text-anchor="middle" fill="#636e72" font-size="11">朴素方案: 5× 完整 prompt = <tspan fill="#e17055" font-weight="700">5× 成本</tspan></text>
+  <rect x="380" y="295" width="300" height="34" rx="6" fill="#e8f5e9" filter="url(#s5)"/>
+  <text x="530" y="317" text-anchor="middle" fill="#2d3436" font-size="11">Fork 方案: 1× cache + 5× directive = <tspan fill="#00b894" font-weight="700">~1.2× 成本</tspan></text>
+</svg>

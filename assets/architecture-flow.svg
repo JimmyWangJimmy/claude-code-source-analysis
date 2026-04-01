@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="system-ui,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6c5ce7"/></marker>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6c5ce7"/><stop offset="100%" stop-color="#a29bfe"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b894"/><stop offset="100%" stop-color="#55efc4"/></linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e17055"/><stop offset="100%" stop-color="#fab1a0"/></linearGradient>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0984e3"/><stop offset="100%" stop-color="#74b9ff"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2d3436">Claude Code 核心运行循环</text>
+  <!-- User Input -->
+  <rect x="310" y="50" width="180" height="44" rx="22" fill="url(#g1)" filter="url(#shadow)"/>
+  <text x="400" y="78" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">用户输入</text>
+  <!-- main.tsx -->
+  <rect x="280" y="130" width="240" height="50" rx="10" fill="url(#g4)" filter="url(#shadow)"/>
+  <text x="400" y="152" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">main.tsx</text>
+  <text x="400" y="170" text-anchor="middle" fill="#e0e0ff" font-size="10">Commander.js CLI + React/Ink 渲染</text>
+  <line x1="400" y1="94" x2="400" y2="130" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- QueryEngine -->
+  <rect x="250" y="215" width="300" height="50" rx="10" fill="url(#g1)" filter="url(#shadow)"/>
+  <text x="400" y="237" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">QueryEngine.ts</text>
+  <text x="400" y="255" text-anchor="middle" fill="#e0e0ff" font-size="10">会话管理 · 消息规范化 · 重试 · Token 计数</text>
+  <line x1="400" y1="180" x2="400" y2="215" stroke="#6c5ce7" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- API -->
+  <rect x="80" y="310" width="220" height="50" rx="10" fill="url(#g2)" filter="url(#shadow)"/>
+  <text x="190" y="332" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Anthropic API</text>
+  <text x="190" y="350" text-anchor="middle" fill="#e0ffe0" font-size="10">claude.ts · 流式响应 · prompt cache</text>
+  <line x1="350" y1="265" x2="240" y2="310" stroke="#00b894" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Tools -->
+  <rect x="500" y="310" width="220" height="50" rx="10" fill="url(#g3)" filter="url(#shadow)"/>
+  <text x="610" y="332" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">工具执行 (40+)</text>
+  <text x="610" y="350" text-anchor="middle" fill="#ffe0e0" font-size="10">Bash · FileEdit · Agent · MCP · Grep ...</text>
+  <line x1="450" y1="265" x2="560" y2="310" stroke="#e17055" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Permission -->
+  <rect x="530" y="390" width="180" height="44" rx="8" fill="#fdcb6e" filter="url(#shadow)"/>
+  <text x="620" y="410" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">6 层权限决策链</text>
+  <text x="620" y="425" text-anchor="middle" fill="#636e72" font-size="9">Deny→Allow→Hook→ML→User</text>
+  <line x1="610" y1="360" x2="610" y2="390" stroke="#fdcb6e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Compact -->
+  <rect x="80" y="390" width="200" height="44" rx="8" fill="#dfe6e9" filter="url(#shadow)"/>
+  <text x="180" y="410" text-anchor="middle" fill="#2d3436" font-size="11" font-weight="600">上下文压缩</text>
+  <text x="180" y="425" text-anchor="middle" fill="#636e72" font-size="9">手动 /compact · 自动 · 增量</text>
+  <line x1="190" y1="360" x2="190" y2="390" stroke="#b2bec3" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Output -->
+  <rect x="310" y="470" width="180" height="44" rx="22" fill="url(#g1)" filter="url(#shadow)"/>
+  <text x="400" y="498" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">渲染输出</text>
+  <line x1="190" y1="434" x2="350" y2="470" stroke="#6c5ce7" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="610" y1="434" x2="450" y2="470" stroke="#6c5ce7" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Side labels -->
+  <text x="60" y="270" font-size="10" fill="#636e72" transform="rotate(-90,60,270)">模型调用</text>
+  <text x="750" y="270" font-size="10" fill="#636e72" transform="rotate(90,750,270)">工具调用</text>
+</svg>

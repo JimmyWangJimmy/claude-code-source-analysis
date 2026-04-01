@@ -1,4 +1,4 @@
-# 工具系统：40+ 工具的设计与实现
+# 第五章 工具系统：40+ 工具的设计与实现
 
 ## 工具框架核心: Tool.ts
 
@@ -88,7 +88,7 @@ rm -rf, dd if=/dev/zero, 凭证窃取, 数据外泄
 - 利用字节级相同的 fork children 实现 **prompt cache 共享**
 - 防递归 fork 保护 (`FORK_BOILERPLATE_TAG`)
 
-> **天才设计:** Fork Agent 的 prompt 与父完全一致 → Anthropic API prompt cache 命中 → 不需要重新编译 system prompt → 大幅节省 Token 和延迟。
+> **设计要点:** Fork Agent 的 prompt 与父完全一致，因此 Anthropic API prompt cache 能直接命中，不需要重新编译 system prompt，显著节省 Token 和延迟。
 
 ---
 
@@ -194,8 +194,6 @@ rm -rf, dd if=/dev/zero, 凭证窃取, 数据外泄
 
 ## 工具结果大小管理
 
-这是一个巧妙的设计:
-
 ```
 工具返回结果
   → 检查大小 > maxResultSizeChars ?
@@ -206,4 +204,4 @@ rm -rf, dd if=/dev/zero, 凭证窃取, 数据外泄
   → 会话级内容替换预算追踪
 ```
 
-> **核心问题:** LLM 上下文窗口有限，但工具可能返回巨大结果。大型工具结果存盘，只给模型摘要——完美解决。
+> **核心问题与解法:** LLM 上下文窗口有限，但工具可能返回很大的结果。解决方式是将大型结果存盘，只给模型发送摘要。

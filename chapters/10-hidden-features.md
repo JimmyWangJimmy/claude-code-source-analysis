@@ -1,4 +1,4 @@
-# 隐藏功能与未发布特性
+# 第十章：隐藏功能与未发布特性
 
 ## Feature Flags 系统
 
@@ -78,7 +78,7 @@ const module = feature('FEATURE_NAME')
 
 ---
 
-## 有趣的隐藏功能
+## 值得关注的隐藏功能
 
 ### 语音输入系统 (Feature: VOICE_MODE)
 
@@ -154,10 +154,10 @@ type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS
 
 ---
 
-## 设计洞察
+## 设计要点
 
 1. **Feature Flags 实现死代码消除** — 编译期移除，产物不含未启用代码
-2. **Proactive 模式** — Agent 自主性的最高级别，预示未来方向
-3. **Voice + Browser** — 向多模态 Agent 进化
+2. **Proactive 模式** — Agent 自主性的最高级别，代表未来演进方向
+3. **Voice + Browser** — 向多模态 Agent 演进
 4. **Buddy 精灵** — 终端工具也能有趣味性
 5. **Analytics 类型安全** — TypeScript 类型系统防止 PII 泄露

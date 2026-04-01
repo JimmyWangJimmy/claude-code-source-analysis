@@ -1,8 +1,8 @@
-# 多智能体协作系统
-
-> 这不是玩具级的 multi-agent demo，而是在真实产品中运行的多智能体编排系统。
+# 第七章：多智能体协作系统
 
 ## 四种 Agent 模式
+
+<img src="../assets/multi-agent-modes.svg" alt="四种Agent模式" width="100%">
 
 ### 1. 子 Agent (Subagent)
 
@@ -20,7 +20,7 @@
 - **防护**: `FORK_BOILERPLATE_TAG` 防止递归 fork
 - **结果**: 立即返回占位符 `'Fork started — processing in background'`
 
-> **这是一个非常聪明的设计:** Fork Agent 的 prompt 与父完全一致 → Anthropic API 的 prompt cache 可以命中 → 不需要为子 Agent 重新编译 system prompt → 大幅节省 Token 和延迟。
+> **设计要点:** Fork Agent 的 prompt 与父完全一致，因此 Anthropic API 的 prompt cache 可以命中，无需为子 Agent 重新编译 system prompt，从而节省 Token 和延迟。
 
 ### 3. 团队 Agent (Team)
 
@@ -132,7 +132,7 @@
 
 ---
 
-## 设计洞察
+## 设计要点
 
 1. **Fork Agent 的 Cache 共享** — 通过保持 prompt 完全一致来复用 API cache
 2. **Worker 工具集限制** — 防止后台 Agent 执行高风险操作

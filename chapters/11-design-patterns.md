@@ -1,6 +1,6 @@
-# 关键设计模式
+# 第十一章：关键设计模式
 
-> 这份源码展示了 Anthropic 工程团队解决 AI Agent 特有难题的方式。
+本章梳理 Claude Code 源码中解决 AI Agent 特有难题的设计模式。
 
 ---
 
@@ -88,7 +88,7 @@ systemPromptSection('key', () => computeExpensiveContent())
 
 **问题**: 用户权限疲劳
 **方案**: 检测连续拒绝模式，升级为批量权限请求
-**洞察**: 粒度过细的权限控制可能比没有权限更糟糕
+**要点**: 粒度过细的权限控制可能比没有权限更糟糕
 
 ---
 
@@ -102,7 +102,7 @@ Fork Agent Prompt = P (字节级相同)
 
 **问题**: 子 Agent API 调用重复浪费 prompt Token
 **方案**: Fork Agent 保持 prompt 与父完全一致
-**天才**: 不是优化传输，而是利用 API 侧缓存机制
+**要点**: 不是优化传输，而是利用 API 侧缓存机制
 
 ---
 
