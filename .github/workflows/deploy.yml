@@ -25,13 +25,10 @@ jobs:
           node-version: 20
 
       - name: Install HonKit
-        run: npm install -g honkit
-
-      - name: Install plugins
-        run: honkit install
+        run: npm install honkit
 
       - name: Build book
-        run: honkit build . ./build
+        run: npx honkit build . ./build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
