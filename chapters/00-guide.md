@@ -2,6 +2,8 @@
 
 **想直接上手？** 跳到 [附录：一键复制配置集](14-copy-paste-configs.md) — settings.json / CLAUDE.md / 环境变量 / Hook 配方 / 初始化脚本，复制粘贴立刻生效。
 
+**想对照源码读？** 源码存档由第三方维护：[instructkr/claw-code](https://github.com/instructkr/claw-code)（~1,902 文件 / 512K 行 TypeScript）。
+
 ---
 
 ## 全书结构

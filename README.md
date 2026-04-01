@@ -16,4 +16,10 @@
 
 **GitHub** → [github.com/JimmyWangJimmy/claude-code-source-analysis](https://github.com/JimmyWangJimmy/claude-code-source-analysis) — Star 支持一下
 
+---
+
+### 源码出处
+
+本书分析基于 2026 年 3 月 31 日通过 npm source map 泄露的 Claude Code TypeScript 源码（约 1,902 个文件 / 512,000 行）。原始泄露经 [@Fried_rice](https://x.com/Fried_rice/status/2038894956459290963) 公开披露。源码存档由第三方维护：[instructkr/claw-code](https://github.com/instructkr/claw-code)（本书不提供源码，仅做分析引用）。
+
 本书仅用于教育与安全研究。原始源码版权归 Anthropic 所有。
