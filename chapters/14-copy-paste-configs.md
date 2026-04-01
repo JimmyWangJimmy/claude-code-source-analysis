@@ -5,6 +5,15 @@
 > - 分三档：保守版（安全优先）、日常版（平衡）、全开版（效率最大化）
 > - 每段配置标注了作用和风险等级
 
+<details>
+<summary>📋 复制给 Claude，一键配置</summary>
+
+```
+读取这个附录的全部配置内容，然后根据我的项目情况（先问我用什么语言和框架），帮我一次性完成所有配置：settings.json 权限白名单、CLAUDE.md 项目规则、Hook 自动格式化、reviewer Agent、Shell 别名。逐个文件创建或更新，完成后汇报。
+```
+
+</details>
+
 ---
 
 ## 一、settings.json（核心配置）

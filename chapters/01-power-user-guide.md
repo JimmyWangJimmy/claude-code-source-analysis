@@ -226,6 +226,15 @@ claude --bare
 }
 ```
 
+<details>
+<summary>📋 复制给 Claude，一键配置</summary>
+
+```
+帮我配置 Claude Code 权限白名单。在 ~/.claude/settings.json 中设置：allow 规则包括 Read、Glob、Grep、所有 git 命令、npm test、npm run、npx、node、python、ls、cat、head、tail、find、grep、rg、wc、echo、which、env、pwd、date。deny 规则包括 rm -rf、sudo、chmod 777、curl POST、dd。如果文件已存在，合并进去不要覆盖其他配置。
+```
+
+</details>
+
 ### 权限规则语法
 
 ```
@@ -273,6 +282,15 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
 }
 ```
 
+<details>
+<summary>📋 复制给 Claude，一键配置</summary>
+
+```
+帮我在 ~/.claude/settings.json 的 hooks.PostToolUse 中添加一个 Hook：每次 Edit 工具执行后，自动运行 prettier --write 格式化被修改的文件。设为异步执行，超时 10 秒。如果 hooks 字段不存在就创建。
+```
+
+</details>
+
 ### 例 2：每次 Bash 后自动 git add
 
 ```json
@@ -307,6 +325,15 @@ claude --dangerously-skip-permissions  # 完全跳过（仅你信任的项目）
   }
 }
 ```
+
+<details>
+<summary>📋 复制给 Claude，一键配置</summary>
+
+```
+帮我在 ~/.claude/settings.json 的 hooks.PostToolUse 中添加一个 Agent 类型的 Hook：每次编辑 src/ 目录下的文件后，自动用 claude-sonnet-4-6 模型跑一遍单元测试并验证是否通过。超时 120 秒。
+```
+
+</details>
 
 ### 例 4：HTTP Webhook 通知
 
@@ -821,6 +848,15 @@ Feature flag `BUDDY` 控制开关。
 ```
 
 **效果：** 常见读取/搜索/git 操作无需确认，格式化自动运行，记忆跨会话保留，个人偏好始终生效。
+
+<details>
+<summary>📋 复制给 Claude，一键配置</summary>
+
+```
+帮我做 Claude Code 项目初始化：1) 在项目根目录创建 CLAUDE.md，内容包括项目语言、框架、测试工具、格式化工具，以及工作规则（先读后改、一次做一件事、报错先分析不重试）。2) 创建 .claude/settings.json 配置权限白名单。3) 创建 .claude/agents/reviewer.md 定义一个只读代码审查 Agent。请先问我项目用什么语言和框架。
+```
+
+</details>
 
 下图展示了 Claude Code 的整体架构，便于理解上述配置项如何与各子系统关联：
 
