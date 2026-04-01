@@ -2,5 +2,7 @@ node_modules/
 _book/
 build/
 *.log
+*.html
 .DS_Store
 Thumbs.db
+package-lock.json
