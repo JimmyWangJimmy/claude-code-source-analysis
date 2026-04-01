@@ -32,3 +32,7 @@
 * [11 - 关键设计模式](chapters/11-design-patterns.md)
 * [12 - 多 Agent 系统设计启示录](chapters/12-multi-agent-design-lessons.md)
 * [13 - 可行动洞察](chapters/13-actionable-insights.md)
+
+## 附录
+
+* [14 - 一键复制配置集](chapters/14-copy-paste-configs.md)
